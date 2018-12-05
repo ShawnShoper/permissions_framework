@@ -1,0 +1,832 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<!--优先使用 IE 最新版本和 Chrome-->
+<meta name="renderer" content="webkit">
+<meta name="author" content="2016.4.17">
+<title>集客宝全球旅游分销系统v2.1.0 - 集合部分</title>
+<link rel="stylesheet" type="text/css" href="css/globle.css">
+<!--滚动条样式-->
+<link rel="stylesheet" type="text/css" href="css/nanoscroller.css">
+<link rel="stylesheet" type="text/css" href="css/jihe.css">
+<script src="js/jquery-1.8.3.min.js"></script>
+<!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=94ba6c063a989ee14c054c00a45aedda	"></script> -->
+<style>
+	.daq-page_select1 {margin-right: 5px;}
+	.daq-page_select1 .daq-btn{width:38px; border-radius: 1px; -webkit-border-radius: 1px; -moz-border-radius: 1px;}
+	.daq-page_select1 .daq-filter {width: 38px; height: 26px; line-height: 26px;}
+	.daq-page_select1 .daq-dropdown-menu {width: 48px; top:25px;}
+	.daq-page_select1 .daq-btn-default .daq-caret {right:10px;}
+
+
+	a {text-decoration:none;}
+    .search_input{font-family: "Microsoft YaHei","Arial", "SimSun";}
+	.content {padding:20px;}
+	.btn_wrap {margin-top:20px;}
+	.input_wrap {margin-top: 30px;}
+	.check_wrap {margin-top: 20px;}
+	.page_wrap {margin-top: 20px;}
+	.page1_wrap { margin-top: 20px; }
+	.tip_wrap {margin-top:20px;}
+	.payoff_wrap {margin-top: 20px;}
+
+
+</style>
+</head>
+<body>
+	<div class="content">
+		<input class="s_input search_input" type="text" placeholder="目的地名称" style="float: left;">
+		<select class="default" style="display: none">
+			<option value="1">请选择这里1</option>
+			<option value="2">请选择这里2</option>
+			<option value="3">请选择这里3</option>
+		</select>
+		<select class="people" style="display: none">
+			<option value="1">请选择这里4</option>
+			<option value="2">请选择这里5</option>
+			<option value="3">请选择这里6</option>
+		</select>
+		<input class="s_input com_input" type="text" placeholder="订单编号">
+		<input class="s_input input-icon input-icon-m" type="text" id="sTime" placeholder="订单发起日" value="">
+		<span class="s_mid">~</span>
+		<input class="s_input input-icon input-icon-m" type="text" id="eTime" placeholder="订单结束日" value="">
+		<button class="s_btn s_btn_search">搜索</button>
+		<div class="address clearfix" style="margin-left: 200px; margin-top: 100px;">
+			<select class="prov addrprovince"></select>
+			<select class="prov addrcity"></select> 
+			<select class="prov addrcounty"></select>
+		</div>
+		<div class="btn_wrap">
+			<a href="javascript:;" class="link_btn"><img src="./images/icon/link_1.png" alt=""><span>添加</span></a>
+			<a href="javascript:;" class="link_btn"><img src="./images/icon/link_2.png" alt=""><span>编辑</span></a>
+			<a href="javascript:;" class="link_btn"><img src="./images/icon/link_3.png" alt=""><span>删除</span></a>
+			<a href="javascript:;" class="link_btn"><img src="./images/icon/link_4.png" alt=""><span>上架</span></a>
+			<a href="javascript:;" class="link_btn"><img src="./images/icon/link_5.png" alt=""><span>下架</span></a>
+			<a href="javascript:;" class="link_btn"><img src="./images/icon/link_6.png" alt=""><span>批量处理</span></a>
+			<a href="javascript:;" class="link_btn"><img src="./images/icon/link_3.png" alt=""><span>批量删除</span></a>
+		</div>
+		<div class="input_wrap">
+			<label class="lab_default">默认状态:</label><input class="s_input s_input_fb" type="text" />
+			<label class="lab_default">错误状态:</label><input class="s_input s_input_fb error" type="text" />
+		</div>
+		<div class="check_wrap" >
+			<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox"></label>温泉</span>
+			<span class="checkbox_wrap"><input class="check_init" type="checkbox" checked="checked"><label class="checkbox active"></label>湿地公园</span>
+			<span class="radio_wrap"><input id="test11" class="deRadio" type="radio" name="test"><label class="radio active"  for="test11" name="test"></label>单选1111</span>
+			<span class="radio_wrap"><input id="test22" class="deRadio" type="radio" name="test"><label class="radio"  for="test22" name="test"></label>单选2222</span>
+			<span class="radio_wrap"><input id="test33" class="deRadio" type="radio" name="test"><label class="radio"  for="test33" name="test"></label>单选3333</span>
+		</div>
+		<div class="page_wrap clearfix">
+			<select class="page_select">
+				<option value="页">页</option>
+				<option value="1">15</option>
+				<option value="2">25</option>
+				<option value="3">35</option>
+			</select>
+			<div class="pages" id="pageDiv">
+				<a class="totpage" href="javascript:;">共145条/15页</a>
+				<a class="currfirst" href="javascript:;"></a>
+				<a class="prepage" href="javascript:;"></a>
+				<a class="curr" href="javascript:;">1</a>
+				<a href="javascript:;">2</a>
+				<a href="javascript:;">3</a>
+				<a href="javascript:;">...</a>
+				<a href="javascript:;">22</a>
+				<a href="javascript:;">23</a>
+				<a href="javascript:;">24</a>
+				<a class="nextpage" href="javascript:;"></a>
+				<a class="currlast" href="javascript:;"></a>
+			</div>
+		</div>
+		<div class="page1_wrap clearfix">
+			<select class="page_select1">
+				<option value="页">页</option>
+				<option value="1">15</option>
+				<option value="2">25</option>
+				<option value="3">35</option>
+			</select>
+			<div class="pages" id="pageDiv">
+				<a class="totpage" href="javascript:;">共145条/15页</a>
+				<a class="currfirst1" href="javascript:;">首页</a>
+				<a class="prepage1" href="javascript:;">上一页</a>
+				<a href="javascript:;">1</a>
+				<a href="javascript:;">2</a>
+				<a href="javascript:;">3</a>
+				<a href="javascript:;">...</a>
+				<a href="javascript:;">22</a>
+				<a href="javascript:;">23</a>
+				<a href="javascript:;">24</a>
+				<a class="nextpage1" href="javascript:;">下一页</a>
+				<a class="currlast1" href="javascript:;">末页</a>
+			</div>
+		</div>
+		<div class="tip_wrap">
+			<span class="tip error_tip">错误提示（用于输入错误提示）</span>
+
+			<span class="tip right_tip">正确提示（用于输入正确提示）</span>
+
+			<span class="tip wran_tip">下载账单 : 请选择要导出报表的起止时间！</span>
+
+			<span class="tip success_tip">下载账单 : 请选择要导出报表的起止时间！</span>
+
+			<span class="tip fail_tip">两次密码不一致！</span>
+
+			<span class="tip wait_tip">待审/进行中</span>
+
+			<span class="tip finish_tip">启用/已处理/已完成</span>
+
+			<span class="tip notpass_tip">启用/已处理/已完成</span>
+
+			<span class="tip sjia_tip">是否上架标识图标</span>
+
+			<span class="tip xjia_tip">是否上架标识图标</span>
+
+			<span class="tip zwsj_tip">暂时没有数据！</span>
+		</div>
+		<div class="payoff_wrap">
+			<a class="payoff pay_alipay" href="javascript:;">
+				<span class="radio_wrap"><input class="deRadio" type="radio" name="pay"><label class="radio" name="pay"></label></span>
+			</a>
+			<a class="payoff pay_wechat" href="javascript:;">
+				<span class="radio_wrap"><input class="deRadio" type="radio" name="pay"><label class="radio" name="pay"></label></span>
+			</a>
+			<a class="payoff pay_balance" href="javascript:;">
+				<span class="radio_wrap"><input class="deRadio" type="radio" name="pay"><label class="radio" name="pay"></label></span>
+				<span class="pay_b_txt">
+					<i>余额支付</i>
+					<strong>￥2897.80</strong>
+				</span>
+			</a>
+		</div>
+		<div class="btn_wrap clearfix">
+			<input class="fom_btn" type="button" value="保存">
+			<input class="fom_btn" type="button" value="退出">
+
+			<a href="javascript:;" class="select_btn">获取验证码</a>
+			<a href="javascript:;" class="select_btn sp_btn">选择</a>
+			<a href="javascript:;" class="select_btn sp_btn">上传</a>
+			<a href="javascript:;" class="bz_btn">标注</a>
+			
+			<a href="javascript:;" class="lay_btn">确认</a>
+			<a href="javascript:;" class="lay_btn">取消</a>
+		</div>
+
+		<div  class="btn_wrap clearfix">
+			<a href="javascript:;" class="bz_btn link01">弹出层1</a>
+			<a href="javascript:;" class="bz_btn link02">弹出层2</a>
+			<a href="javascript:;" class="bz_btn link04">弹出层4</a>
+			<a href="javascript:;" class="bz_btn link05">弹出层5</a>
+			<a href="javascript:;" class="bz_btn link06">弹出层6</a>
+			<a href="javascript:;" class="bz_btn link07">弹出层7</a>
+			<a href="javascript:;" class="bz_btn link08">弹出层8</a>
+			<a href="javascript:;" class="bz_btn link09">弹出层9</a>
+			<a href="javascript:;" class="bz_btn link10">弹出层10</a>
+			<a href="javascript:;" class="bz_btn link11">弹出层11</a>
+			<a href="javascript:;" class="bz_btn link12">弹出层12</a>
+			<a href="javascript:;" class="bz_btn link13">弹出层13</a>
+			<a href="javascript:;" class="bz_btn link14">弹出层14</a>
+			<a href="javascript:;" class="bz_btn link15">弹出层15</a>
+			<a href="javascript:;" class="bz_btn link16">弹出层16</a>
+			<a href="javascript:;" class="bz_btn link18">弹出层18</a>
+		</div>
+            
+            
+            
+	</div>
+
+<div class="time_layer">
+	<table class="tbl_form" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="tbl_tit"><b class="mark">*</b><span>时间段：</span></td>
+            <td colspan="3"><input class="s_input input-icon input-icon-t sTime w170"  id="sTime1" type="text" value="" placeholder="2016/05/15" /><span class="s_mid">~</span><input class="s_input input-icon eTime input-icon-t w170" id="eTime1" type="text" value="" placeholder="2016/05/15" /></td>
+        </tr>
+        <tr>
+            <td class="tbl_tit"><b class="mark">*</b><span>票面价格：</span></td>
+            <td><input class="s_input w100" type="text" value="" placeholder="200" />元</td>
+            <td class="tbl_tit"><b class="mark">*</b><span>整体库存：</span></td>
+            <td><input class="s_input w100" type="text" value="" placeholder="9999" />张</td>
+        </tr>
+        <tr>
+            <td class="tbl_tit"><b class="mark">*</b><span>售卖价格：</span></td>
+            <td><input class="s_input w100" type="text" value="" placeholder="180" />元</td>
+            <td class="tbl_tit"><b class="mark">*</b><span>最少购买：</span></td>
+            <td><input class="s_input w100" type="text" value="" placeholder="1" />张</td>
+        </tr>
+        <tr>
+            <td class="tbl_tit"><b class="mark">*</b><span>结算价格：</span></td>
+            <td><input class="s_input w100" type="text" value="" placeholder="168" />元</td>
+            <td class="tbl_tit"><b class="mark">*</b><span>最多购买：</span></td>
+            <td><input class="s_input w100" type="text" value="" placeholder="100" />张</td>
+        </tr>
+        <tr>
+            <td class="tbl_tit"></td>
+            <td colspan="3">
+                <div class="layui-layer-btn layui-layer-btn-d"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">取消</a></div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+<script src="js/jquery.nanoscroller.min.js"></script>
+<script src="js/jquery.dropdaq.js"></script>
+<script src="js/index.js"></script>
+<script src="laydate/laydate.js"></script>    
+<script src="js/map.js"></script>
+<script src="js/address.js"></script>
+<script src="layer/layer.js"></script>
+<script src="js/main.js"></script>
+<script>
+ 
+$(function(){
+	/*前六个提示   禁用 删除 上架 发送短信 余额不足 */
+	$(".link01").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "提示",
+		  skin: 'lay_tips', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['420px', '280px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="tipcon_wrap"><div class="tipicon tipicon_cg"></div><p>是否向<i>15882382007</i>的客户重新发送验证短信？</p></div> <div class="layui-layer-btn layui-layer-btn-dq"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">取消</a></div>'
+		});
+		// 禁用      加class   tipicon_jy
+		// 删除      加class   tipicon_sc
+		// 上架      加class   tipicon_sj
+		// 发送短信  加class   tipicon_dx
+		// 余额不足  加class   tipicon_sx
+		// 成功消费  加class   tipicon_cg
+		// 退款审核  加class   tipicon_tk
+	});
+ 
+	/* 是否确认将该分销商加入黑名单？ */
+	$(".link02").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "提示",
+		  skin: 'lay_tips', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  btn: ['确定', '取消'],
+		  yes: function(index, layero){ 
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['420px', '300px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="tipcon_wrap"><div class="tipicon tipicon_hmd"></div><p class="txttip_mdd">是否确认将该分销商加入黑名单？</p><textarea class="txtarea_l txtarea_hmd" placeholder="请在这里填写说明文字！"></textarea> </div>'
+		});
+	});
+	/*退款审核1*/
+	/*$(".link03").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "退款审核",
+		  skin: 'lay_tips_tk', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['420px', '300px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="tipcon_wrap"><div class="tipicon tipicon_tk"></div><p><span class="radio_wrap"><input class="deRadio" type="radio" name="test"><label class="radio active" name="test"></label>同意退款</span><span class="radio_wrap"><input class="deRadio" type="radio" name="test"><label class="radio" name="test"></label>不同意退款</span></p><div class="layui-layer-btn layui-layer-btn-dq"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">取消</a></div></div>'
+		});	
+	});*/
+
+
+	
+	/*退款审核2*/
+	$(".link04").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "退款审核",
+		  skin: 'lay_tips_tk', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['420px', '300px'],
+		  btn: ['确定', '取消'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="tipcon_wrap"><div class="tipicon tipicon_tk tipicon_top"></div><p class="txttip_mdd"><span class="radio_wrap tytk_radio"><input class="deRadio" type="radio" name="test"><label class="radio tytk_radio active" name="test"></label>同意退款</span><span class="radio_wrap tytk_radio no_tytk_radio"><input class="deRadio" type="radio" name="test"><label class="radio" name="test"></label>不同意退款</span></p><textarea id="txtarea_tytk" style="resize:none;" class="txtarea_l txtarea_hmd none" placeholder="请在这里填写说明文字！"></textarea></div>'
+		});
+
+	});
+	/*人工调整结算金额*/
+	$(".link05").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "人工调整结算金额",
+		  skin: 'lay_tips_tz', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['420px', '300px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="tipcon_wrap tipcon_jaj"><div class="input_row clearfix" ><label class="lab_default">加:</label><input class="s_input s_input_fb w170" type="text" placeholder="请输入金额..."/>元</div><div class="input_row clearfix"><label class="lab_default">减:</label><input class="s_input s_input_fb w170" type="text" placeholder="请输入金额..." />元</div><div class="layui-layer-btn layui-layer-btn-dq"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">取消</a></div></div>'
+		});
+		fobl('.s_input_fb');
+	});
+	/*结算确认*/
+	$(".link06").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "结算确认",
+		  skin: 'lay_tips_tk', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['420px', '300px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="tipcon_wrap"><p class="txttip_jsqr">确认后，平台将按此金额进行结果打款，无法更改。若对账单有任何疑问，请联系平台运营人员！</p><div class="layui-layer-btn layui-layer-btn-dq"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">取消</a></div></div>'
+		});
+	});
+	/*成功消费3份儿*/
+	$(".link07").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "提示",
+		  skin: 'lay_tips', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['420px', '280px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="tipcon_wrap"><div class="tipicon tipicon_cg"></div><p>恭喜您成功消费<i>3</i>份！</p></div>'
+		});
+	});
+	/*添加字典*/
+	$(".link08").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "添加字典",
+		  skin: 'lay_tips_tj', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['540px', '410px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="tipcon_wrap tipcon_tjzd"><div class="input_row clearfix" ><label class="lab_default"><b class="mark">*</b>字典代码：</label><input class="s_input s_input_fb w240" type="text"/></div><div class="input_row clearfix" ><label class="lab_default"><b class="mark">*</b>字典名称：</label><input class="s_input s_input_fb w240" type="text"/></div><div class="input_row clearfix" ><label class="lab_default">字典类型：</label><input class="s_input s_input_fb w240" type="text"/></div><div class="input_row clearfix" ><label class="lab_default fl">上级字典：</label><select class="select-sjzd"><option value="1">上级字典1</option><option value="2">上级字典2</option></select></div><div class="input_row clearfix" ><label class="lab_default">排序：</label><input class="s_input s_input_fb w240" type="text"/></div><div class="layui-layer-btn layui-layer-btn-d"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">取消</a></div></div>'
+		});
+		fobl('.s_input_fb');
+		$('.select-sjzd').dropDqDefault({
+			deVal : "上级字典",
+			riInput : "",
+			change: function (value, text) {
+			   console.log('You picked: ' + value + ':' + text);
+			}
+		});
+	});
+	/*请选择反馈结果*/
+	$(".link09").click(function(e){
+		e.stopPropagation();
+		layer.open({
+		  type: 1,
+		  title : "请选择反馈结果",
+		  skin: 'lay_tips_fk', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['540px', '410px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="tipcon_wrap tipcon_fk"><ul class="fk_lst"><li><label>拒绝，无合法资质</label><span class="radio_wrap mt11"><input class="deRadio" type="radio" name="fk_radio"><label class="radio" name="fk_radio"></label></span></li><li><label>无合作意向</label><span class="radio_wrap mt11"><input class="deRadio" type="radio" name="fk_radio"><label class="radio" name="fk_radio"></label></span></li><li><label>洽谈中</label><span class="radio_wrap mt11"><input class="deRadio" type="radio" name="fk_radio"><label class="radio" name="fk_radio"></label></span></li><li><label>其他</label><span class="radio_wrap mt11"><input class="deRadio" type="radio" name="fk_radio"><label class="radio" name="fk_radio"></label></span></li></ul><textarea class="txtarea_l txtarea_fkjg" placeholder="请在这里填写说明文字！"></textarea><div class="layui-layer-btn layui-layer-btn-d"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">取消</a></div></div>'
+		});
+		// 弹出层反馈结果
+		$('.fk_lst li').click(function(e){
+			e.stopPropagation();
+			$(this).addClass('active').siblings('li').removeClass('active');
+			radio($(this).find('.radio_wrap'));
+		});
+	});
+	
+	/*修改密码*/
+	$(".link10").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "修改密码",
+		  skin: 'lay_tips_fk', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  	// 提示信息
+		  	$('.lay_tiprow').addClass('lay_tiperror').html('<span class="tip fail_tip">两次密码不一致！</span>');
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['540px', '410px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="lay_tiprow"></div><div class="tipcon_wrap tipcon_tjzd tipcon_xg"><div class="input_row clearfix" ><label class="lab_default">用户名：</label>黄小叶</div><div class="input_row clearfix" ><label class="lab_default">原密码：</label><input class="s_input s_input_fb w240" type="text"/></div><div class="input_row clearfix" ><label class="lab_default">新密码：</label><input class="s_input s_input_fb w240" type="text"/></div><div class="input_row clearfix" ><label class="lab_default">确认新密码：</label><input class="s_input s_input_fb w240" type="text"/></div><div class="layui-layer-btn layui-layer-btn-d"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">取消</a></div></div>'
+		});
+		fobl('.s_input_fb');
+	});
+	
+	/*修改手机号码*/
+	$(".link11").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "修改手机号码",
+		  skin: 'lay_tips_fk', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  	// 提示信息
+		  	$('.lay_tiprow').addClass('lay_tipsuccess').html('<span class="tip success_tip">验证码已发送到您的手机，请注意查收！</span>');
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['540px', '410px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="lay_tiprow"></div><div class="tipcon_wrap tipcon_tjzd tipcon_xgmm"><div class="input_row clearfix" ><label class="lab_default">原密码：</label><input class="s_input s_input_fb w240" type="text"/></div><div class="input_row clearfix" ><label class="lab_default">新密码：</label><input class="s_input s_input_fb s_input_yzm w150" type="text"/><a href="javascript:;" class="select_btn">获取验证码</a></div><div class="layui-layer-btn layui-layer-btn-d"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">取消</a></div></div>'
+		});
+		fobl('.s_input_fb');
+	});
+	/*填写分销信息*/
+	$(".link12").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "填写分销信息",
+		  skin: 'lay_tips_fk', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  	// 提示信息
+		  	$('.lay_tiprow').addClass('lay_tipsuccess').html('<span class="tip success_tip">验证码已发送到您的手机，请注意查收！</span>');
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['620px', '550px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="lay_tiprow"></div><div class="tipcon_wrap tipcon_tjzd tipcon_fxxx"><div class="input_row clearfix" ><label class="lab_default"><b class="mark">*</b>分销份数：</label><input class="s_input s_input_fb w240" type="text"/>份</div><div class="input_row clearfix" ><label class="lab_default"><b class="mark">*</b>分销单价：</label><input class="s_input s_input_fb w240" type="text"/>元</div><div class="input_row clearfix" ><label class="lab_default"><b class="mark">*</b>联系人手机号：</label><input class="s_input s_input_fb w240" type="text"/><span class="layinput_tip layinput_tip_phone">用于给联系人接收验证码，请准确填写</span></div><div class="input_row clearfix" ><label class="lab_default"><b class="mark">*</b>联系人姓名：</label><input class="s_input s_input_fb w240" type="text"/></div><div class="clearfix" ><label class="lab_default fl">备注：</label><textarea class="txtarea_l txtarea_fxxx" placeholder="请在这里填写说明文字！"></textarea></div><div class="layui-layer-btn layui-layer-btn-d"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">取消</a></div></div>'
+		});
+		fobl('.s_input_fb');
+	});
+	
+	/*位置标注*/
+	$(".link13").click(function(){
+		layer.open({
+		  type: 1,
+		  title : "位置标注",
+		  skin: 'lay_tips_wz', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  	// 提示信息
+		  	$('.lay_tiprow').addClass('lay_tipsuccess').html('<span class="tip success_tip">验证码已发送到您的手机，请注意查收！</span>');
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['590px', '458px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="tipcon_wrap lay_map"><div class="lay_map_top"><div class="lay_map_search"><input class="s_input s_input_map" type="text" placeholder="请输入地址获取对应坐标位置" /><a class="s_map_btn" href="javascript:;">标注</a></div><a class="s_mbtn">确定</a></div><div class="lay_map_con" id="lay_map_con"></div></div>'
+		});
+
+		// 百度地图API功能
+		var map = new BMap.Map("lay_map_con");    // 创建Map实例
+		map.centerAndZoom(new BMap.Point(104.0495350000, 30.6487320000), 13);  // 初始化地图,设置中心点坐标和地图级别
+		var navigationControl = new BMap.NavigationControl({
+		    // 靠左上角位置
+		    anchor: BMAP_ANCHOR_TOP_LEFT,
+		    // LARGE类型
+		    type: BMAP_NAVIGATION_CONTROL_LARGE,
+		    // 启用显示定位
+		    enableGeolocation: true
+		  });
+		map.addControl(navigationControl);
+		map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+		map.setCurrentCity("成都");          // 设置地图显示的城市 此项是必须设置的
+		map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+	});
+	/*价格时间段设置*/
+	$(".link14").click(function(){
+		/*var timeStr = '';
+		timeStr += '<table class="tbl_form tbl_form_time" border="0" cellpadding="0" cellspacing="0">';
+		timeStr += '<tr>';
+		timeStr += '<td class="tbl_tit tbl_titlay"><span>时间段：</span></td>';
+		timeStr += '<td colspan="3"><input class="s_input input-icon input-icon-t sTime w170"  id="sTime1" type="text" value="" placeholder="2016/05/15" /><span class="s_mid">~</span><input class="s_input input-icon eTime input-icon-t w170" id="eTime1" type="text" value="" placeholder="2016/05/15" /></td>';
+		timeStr += '</tr>';
+		timeStr += '<tr>';
+		timeStr += '<td class="tbl_tit tbl_titlay"><b class="mark">*</b><span>票面价格：</span></td>';
+		timeStr += '<td><input class="s_input s_input_fb w100" type="text" value="" placeholder="200" />元</td>';
+		timeStr += '<td class="tbl_tit tbl_titlay"><b class="mark">*</b><span>整体库存：</span></td>';
+		timeStr += '<td><input class="s_input s_input_fb w100" type="text" value="" placeholder="9999" />张</td>';
+		timeStr += '</tr>';
+		timeStr += '<tr>';
+		timeStr += '<td class="tbl_tit tbl_titlay"><b class="mark">*</b><span>售卖价格：</span></td>';
+		timeStr += '<td><input class="s_input s_input_fb w100" type="text" value="" placeholder="180" />元</td>';
+		timeStr += '<td class="tbl_tit tbl_titlay"><b class="mark">*</b><span>最少购买：</span></td>';
+		timeStr += '<td><input class="s_input s_input_fb w100" type="text" value="" placeholder="1" />张</td>';
+		timeStr += '</tr>';
+		timeStr += '<tr>';
+		timeStr += '<td class="tbl_tit tbl_titlay"><b class="mark">*</b><span>结算价格：</span></td>';
+		timeStr += '<td><input class="s_input s_input_fb w100" type="text" value="" placeholder="168" />元</td>';
+		timeStr += '<td class="tbl_tit tbl_titlay"><b class="mark">*</b><span>最多购买：</span></td>';
+		timeStr += '<td><input class="s_input s_input_fb w100" type="text" value="" placeholder="100" />张</td>';
+		timeStr += '</tr>';
+		timeStr += '<tr>';
+		timeStr += '<td class="tbl_tit tbl_titlay"></td>';
+		timeStr += '<td colspan="3">';
+		timeStr += '<div class="layui-layer-btn layui-layer-btn-d"><a class="layui-layer-btn0">确定</a><a class="layui-layer-btn1">取消</a></div>';
+		timeStr += '</td>';
+		timeStr += '</tr>';
+		timeStr += '</table>';*/
+		layer.open({
+		  type: 1,
+		  title : "价格时间段设置",
+		  skin: 'lay_tips_fk lay_tips_tim', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['730px', '420px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: $('.time_layer')
+		});
+		fobl('.s_input_fb');
+		fobl('.input-icon');
+		
+	});
+	
+	/*订单详情*/
+	$(".link15").click(function(){ 
+	var orderStr = '<div class="lay_tab_lst">';
+		orderStr += '<ul class="order_lst clearfix">';
+		orderStr += '<li><a href="javascript:;">订单信息</a></li>';
+		orderStr += '<li  class="active"><a href="javascript:;">消费记录</a></li>';
+		orderStr += '<li><a href="javascript:;">退款记录</a></li>';
+		orderStr += '<li class="end"><a href="javascript:;">订单日志</a></li>';
+		orderStr += '</ul>';
+		orderStr += '<div class="order_table order_table1 ">';
+		orderStr += '<table class="tbl_form tbl_order" border="0" cellpadding="0" cellspacing="0">';
+		orderStr += '<tr>';
+		orderStr += '<td class="tbl_tit"><span>订单编号：</span></td>';
+		orderStr += '<td>DD20160217123456</td>';
+		orderStr += '<td class="tbl_tit"><span>下单时间：</span></td>';
+		orderStr += '<td>2016-02-15 09:00:00</td>';
+		orderStr += '</tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="tbl_tit"><span>产品编号：</span></td>';
+		orderStr += '<td>CP20160217123456</td>';
+		orderStr += '<td class="tbl_tit"><span>产品名称：</span></td>';
+		orderStr += '<td>峨眉山景区门票</td>';
+		orderStr += '</tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="tbl_tit"><span>单价&数量：</span></td>';
+		orderStr += '<td>￥80.00*4</td>';
+		orderStr += '<td class="tbl_tit"><span>总金额：</span></td>';
+		orderStr += '<td>￥320.00</td>';
+		orderStr += '</tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="tbl_tit"><span>客户姓名：</span></td>';
+		orderStr += '<td>黄小野</td>';
+		orderStr += '<td class="tbl_tit"><span>手机号码：</span></td>';
+		orderStr += '<td>15882344361</td>';
+		orderStr += '</tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="tbl_tit"><span>订单状态：</span></td>';
+		orderStr += '<td>未支付</td>';
+		orderStr += '<td class="tbl_tit"><span>订单来源：</span></td>';
+		orderStr += '<td>集客宝前台</td>';
+		orderStr += '</tr>';
+		orderStr += '</table>';
+		orderStr += '</div>';
+		orderStr += '<div class="order_table order_table2 active">';
+		orderStr += '<table class="tbl_order_lst" border="0" cellpadding="0" cellspacing="0"> ';
+		orderStr += '<thead>';
+		orderStr += '<tr>';
+		orderStr += '<th class="lft">序号</th>';
+		orderStr += '<th>验证单号</th>';
+		orderStr += '<th>消费时间</th>';
+		orderStr += '<th>消费状态</th>';
+		orderStr += '<th class="rgt">操作人</th>';
+		orderStr += '</tr>';
+		orderStr += '</thead>';
+		orderStr += '<tbody>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">1</td>';
+		orderStr += '<td>2016102523</td>';
+		orderStr += '<td>2016-02-16 09:00:00</td>';
+		orderStr += '<td>已消费</td>';
+		orderStr += '<td class="rgt">徐小小</td>';
+		orderStr += '</tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">2</td>';
+		orderStr += '<td>2016102523</td>';
+		orderStr += '<td>2016-02-16 09:00:00</td>';
+		orderStr += '<td>已消费</td>';
+		orderStr += '<td class="rgt">徐小小</td>';
+		orderStr += '</tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">3</td>';
+		orderStr += '<td>2016102523</td>';
+		orderStr += '<td>2016-02-16 09:00:00</td>';
+		orderStr += '<td>已消费</td>';
+		orderStr += '<td class="rgt">徐小小</td>';
+		orderStr += '</tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">4</td>';
+		orderStr += '<td>2016102523</td>';
+		orderStr += '<td>2016-02-16 09:00:00</td>';
+		orderStr += '<td>已消费</td>';
+		orderStr += '<td class="rgt">徐小小</td>';
+		orderStr += '</tr>';
+		orderStr += '</tbody>';
+		orderStr += '</table>';
+		orderStr += '</div>';
+		orderStr += '<div class="order_table order_table3">';
+		orderStr += '<table class="tbl_order_lst" border="0" cellpadding="0" cellspacing="0">';
+		orderStr += '<thead>';
+		orderStr += '<tr>';
+		orderStr += '<th class="lft">序号</th>';
+		orderStr += '<th class="txtl">退款产品</th>';
+		orderStr += '<th>退款数量</th>';
+		orderStr += '<th class="txtr">退款金额</th>';
+		orderStr += '<th class="tw67">申请时间</th>';
+		orderStr += '<th class="tw67">退款时间</th>';
+		orderStr += '<th>状态</th>';
+		orderStr += '<th class="rgt">操作人</th>';
+		orderStr += '</tr>';
+		orderStr += '</thead>';
+		orderStr += '<tbody>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">1</td>';
+		orderStr += '<td class="txtl">九寨沟门票</td>';
+		orderStr += '<td>1</td>';
+		orderStr += '<td class="txtr">￥50.00</td>';
+		orderStr += '<td class="tw67">2016-02-16 09:00:00</td>';
+		orderStr += '<td class="tw67">2016-02-16 09:00:00</td>';
+		orderStr += '<td>退款成功</td>';
+		orderStr += '<td class="rgt">徐小小</td>';
+		orderStr += '</tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">2</td>';
+		orderStr += '<td class="txtl">酒店住宿套票</td>';
+		orderStr += '<td>1</td>';
+		orderStr += '<td class="txtr">￥50.00</td>';
+		orderStr += '<td class="tw67">2016-02-16 09:00:00</td>';
+		orderStr += '<td class="tw67">2016-02-16 09:00:00</td>';
+		orderStr += '<td>退款成功</td>';
+		orderStr += '<td class="rgt">徐小小</td>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">3</td>';
+		orderStr += '<td class="txtl">峨眉山门票</td>';
+		orderStr += '<td>1</td>';
+		orderStr += '<td class="txtr">￥50.00</td>';
+		orderStr += '<td class="tw67">2016-02-16 09:00:00</td>';
+		orderStr += '<td class="tw67">2016-02-16 09:00:00</td>';
+		orderStr += '<td>退款成功</td>';
+		orderStr += '<td class="rgt">徐小小</td>';
+		orderStr += '</tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">4</td>';
+		orderStr += '<td class="txtl">乐山大佛讲解票</td>';
+		orderStr += '<td>1</td>';
+		orderStr += '<td class="txtr">￥50.00</td>';
+		orderStr += '<td class="tw67">2016-02-16 09:00:00</td>';
+		orderStr += '<td class="tw67">2016-02-16 09:00:00</td>';
+		orderStr += '<td>退款成功</td>';
+		orderStr += '<td class="rgt">徐小小</td>';
+		orderStr += '</tr>';
+		orderStr += '</tbody>';
+		orderStr += '</table>';
+		orderStr += '</div>';
+		orderStr += '<div class="order_table order_table4">';
+		orderStr += '<table class="tbl_order_lst" border="0" cellpadding="0" cellspacing="0"> ';
+		orderStr += '<thead>';
+		orderStr += '<tr>';
+		orderStr += '<th class="lft">序号</th>';
+		orderStr += '<th>操作人</th>';
+		orderStr += '<th>操作类型</th>';
+		orderStr += '<th class="lt">备注</th>';
+		orderStr += '<th>操作时间</th>';
+		orderStr += '</tr>';
+		orderStr += '</thead>';
+		orderStr += '<tbody>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">1</td>';
+		orderStr += '<td>徐小小</td>';
+		orderStr += '<td>订单新增</td>';
+		orderStr += '<td class="lt">订单创建</td>';
+		orderStr += '<td>2016-02-16 09:00:00</td>';
+		orderStr += '</tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">2</td>';
+		orderStr += '<td>徐小小</td>';
+		orderStr += '<td>订单支付</td>';
+		orderStr += '<td class="lt">订单支付</td>';
+		orderStr += '<td>2016-02-16 09:00:00</td>';
+		orderStr += '</tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">3</td>';
+		orderStr += '<td>徐小小</td>';
+		orderStr += '<td>订单发货</td>';
+		orderStr += '<td class="lt">商品编号：XXXXX</td>';
+		orderStr += '<td>2016-02-16 09:00:00</td>';
+		orderStr += ' </tr>';
+		orderStr += '<tr>';
+		orderStr += '<td class="lft">4</td>';
+		orderStr += '<td>徐小小</td>';
+		orderStr += '<td>订单退款</td>';
+		orderStr += '<td class="lt">申请退款【商品编号：XXXX】</td>';
+		orderStr += '<td>2016-02-16 09:00:00</td>';
+		orderStr += '</tr>';
+		orderStr += '</tbody>';
+		orderStr += '</table>';
+		orderStr += '</div>';
+		orderStr += '</div>';
+		layer.open({
+				  type: 1,
+				  title : "订单详情",
+				  skin: 'lay_tips_dd', //样式类名
+				  closeBtn: 1, //不显示关闭按钮
+				  shift: 0,
+				  yes: function(index, layero){ 
+				  	// 提示信息
+				  	$('.lay_tiprow').addClass('lay_tipsuccess').html('<span class="tip success_tip">验证码已发送到您的手机，请注意查收！</span>');
+				  },
+				  cancel: function(index){ 
+				  },
+				  area: ['750px', '430px'],
+				  shadeClose: true, //开启遮罩关闭
+				  content: orderStr
+				});
+	// 订单list tab切换
+	$('.order_lst li').click(function(){
+	    $(this).addClass('active').siblings('li').removeClass('active');
+	    var or_ind = $(this).index() + 1;
+	    $('.order_table'+ or_ind).addClass('active').siblings('.order_table').removeClass('active');
+	})
+				   // 1  代表操作成功
+    // 2  代表操作失败
+    // 3  代表请求超时
+    // 4  代表操作成功1
+    // 5  代表操作失败1
+    // 6  代表请求超时1
+	});
+	/*操作成功*/
+	$(".link16").click(function(){
+		layer.msg('操作成功!', {
+		  icon: 6,
+		  shift: 6,    // 出现的动画效果
+		  time: 2000 //2秒关闭（如果不配置，默认是3秒）
+		}, function(){
+		  //do something
+		}); 
+	});
+
+	/*自定页*/
+	$(".link18").click(function(){
+		layer.open({
+		  type: 1,  // 弹出层类型 0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+		  skin: 'layui-layer-demo', //样式类名
+		  closeBtn: 0, //不显示关闭按钮
+		  shift: 6,    // 出现的动画效果
+		  title : false, // 是否显示标题
+		  time: 2000, //2s后自动关闭
+		  area : ["160px", "110px"],  // 页面大小
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="smail_lay"><img src="./images/smile.png" /><p>密码修改成功！</p></div>'
+		});
+	});
+
+
+	//调用示例
+	/*layer.ready(function(){ //为了layer.ext.js加载完毕再执行
+	  layer.photos({
+	    photos: '#layer-photos-demo'
+	  });
+	});   */
+	
+}); 
+</script>
+<script src="js/jihe.js"></script>	
+</body>
+</html>

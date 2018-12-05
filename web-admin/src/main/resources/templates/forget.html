@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<!--优先使用 IE 最新版本和 Chrome-->
+<meta name="renderer" content="webkit">
+<meta name="author" content="2016.4.17">
+<title>集客宝全球旅游分销系统v2.1.0-登录</title>
+<link rel="stylesheet" type="text/css" href="css/globle.css">
+<link rel="stylesheet" type="text/css" href="css/jihe.css">
+<!--滚动条样式-->
+<script src="js/jquery-1.8.3.min.js"></script>
+<style>
+	html,body{ width:100%; height:100%;}
+</style>
+</head>
+<body class="login_bg">
+
+
+<!--content S-->
+<div class="login_con">
+	<img class="forgot_logo" src="images/forget_logo.png" />
+	<div class="forgot_box">
+		<h2 class="forgot_tit">找回密码</h2>
+		<div class="forgot_con">
+			<ul class=" clearfix forgot_step">
+				<li class="curr">
+					<p class="step_num">
+						<i></i>
+						<span><b>01</b></span>
+					</p>
+					<p class="step_text">第一步：验证手机号</p>
+				</li>
+				<li>
+					<p class="step_num">
+						<i></i>
+						<span><b>02</b></span>
+					</p>
+					<p class="step_text">第二步：设置新密码</p>
+				</li>
+				<li>
+					<p class="step_num">
+						<i></i>
+						<span><b>03</b></span>
+					</p>
+					<p class="step_text">第三步：设置成功</p>
+				</li>
+			</ul>
+			<div class="step_con">
+				<p class="step_tip"><span class="tip success_tip">下载账单 : 请选择要导出报表的起止时间！</span></p>
+				<ul class="step_input">
+					<li>
+						<label>手机号码：</label>
+						<input class="s_input s_input_fb" type="text" />
+						<a href="javascript:;" class="select_btn">获取验证码</a>
+					</li>
+					<li>
+						<label>验证码：</label>
+						<input class="s_input s_input_fb" type="text" />
+						<span class="tip error_tip">验证码错误</span>
+					</li>
+					<li>
+						<label></label>
+						<input  id="step1" class="fom_btn  step_next" type="submit" value="下一步" />
+					</li>
+				</ul>
+			</div>
+			<div class="step_con none">
+				<ul class="step_input step_input2">
+					<li>
+						<label>设置新密码：</label>
+						<input  class="s_input s_input_fb" type="text" />
+					</li>
+					<li>
+						<label>确认新密码：</label>
+						<input class="s_input s_input_fb" type="text" />
+					</li>
+					<li>
+						<label></label>
+						<input id="step2" class="fom_btn  step_next" type="submit" value="下一步" />
+					</li>
+				</ul>
+			</div>
+			<div class="step_con none">
+				<p class="step_success">
+					<img src="images/smile.png" /><br/>
+					您的登录密码已重新设置成功！
+				</p>
+			</div>
+				
+		</div>
+	</div>
+</div>
+<!--content E-->
+
+<!--bottom S-->
+<div class="footer">
+	<p class="copyright">版权所有：<a target="_blank" href="http://www.daqsoft.com">成都中科大旗软件有限公司</a> Copyright © 2004-2016 www.daqsoft.com 蜀ICP备08010315号&nbsp;&nbsp;咨询电话：400-028-0035</p>
+</div>
+<!--bottom E-->
+<script>
+	$(function(){
+		$("#step1").click(function(){
+			$(".forgot_step li").eq(1).addClass("curr");
+			$(this).parents(".step_con").hide().next(".step_con").fadeIn(200);
+		});
+		$("#step2").click(function(){
+			$(".forgot_step li").eq(2).addClass("curr");
+			$(this).parents(".step_con").hide().next(".step_con").fadeIn(200);
+		});
+		fobl('.s_input_fb');
+		function fobl(that){
+			var $this = $(that);
+			$this.focus(function(){
+				$(this).addClass('active');
+			});
+			$this.blur(function(){
+				$(this).removeClass('active');
+			});
+
+		}
+	});
+</script>
+</body>
+</html>

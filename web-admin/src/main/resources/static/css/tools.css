@@ -1,0 +1,269 @@
+/* tools中使用的css */
+.disabled {
+    pointer-events: none;
+    background-color: #ccc !important;
+    cursor: auto !important;
+}
+
+/*接口结果提示 start*/
+.no_data, .no_data1, .try_refresh, .try_refresh1 {
+    width: 100%;
+    font-size: 15px;
+    color: red;
+    text-align: center;
+}
+
+.no_data1, .try_refresh1 {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+/*接口结果提示 end*/
+
+/*加载提示 start*/
+.loading_tips, .dy_loading_tips {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.dy_loading_tips {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.loading_tips p, .dy_loading_tips p {
+    font: 18px/34px "microsoft yahei";
+}
+
+.loading_tips img, .dy_loading_tips img {
+    width: 65px;
+    height: 65px;
+}
+
+/*加载提示 end*/
+
+/*翻页start*/
+/*自定义新样式请复制翻页所有样式，然后修改.page名称，再分别修改样式内容，例子见下面翻页第二版*/
+.page {
+    padding: 40px 0 80px;
+    font-size: 0;
+    text-align: center;
+}
+
+.page > a {
+    display: inline-block;
+    vertical-align: middle;
+    width: 48px;
+    height: 36px;
+    margin: 0 5px;
+    font: normal 14px/36px "Arial";
+    color: #555;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #e8e8e8;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.page > .first_page, .page > .last_page {
+    width: 68px;
+    font-family: "Microsoft YaHei";
+}
+
+.page > .page_down, .page > .page_up {
+    width: 78px;
+    font-family: "Microsoft YaHei";
+}
+
+/*有效按钮（可点击）,自定义样式时请注意valid和invalid*/
+.page > .curr, .page > .valid:hover {
+    font-weight: bold;
+    color: #fff;
+    background-color: #40abf6;
+    border-color: #40abf6;
+}
+
+/*无效按钮（不能点击）*/
+.page > .invalid {
+    cursor: auto;
+}
+
+/*翻页end*/
+
+/*翻页第二版 start*/
+.page_small {
+    width: 100%;
+    height: 26px;
+    padding: 40px 0;
+    font-size: 0;
+    text-align: center;
+}
+
+.page_small a {
+    display: inline-block;
+    vertical-align: middle;
+    height: 24px;
+    line-height: 24px;
+    margin-right: 10px;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
+    text-align: center;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    width: 28px;
+    font-family: "Arial";
+    cursor: pointer;
+}
+
+.page_small a.first_page, .page_small a.last_page {
+    width: 48px;
+    font-family: "Microsoft YaHei";
+}
+
+.page_small a.page_up, .page_small a.page_down {
+    width: 62px;
+    font-family: "Microsoft YaHei";
+}
+
+/*有效按钮（可点击）*/
+.page_small .valid:hover {
+    background-color: #ff8e20;
+    border: 1px solid #ff8e20;
+    color: #fff;
+}
+
+.page_small .curr {
+    font-weight: bold;
+    font-size: 16px;
+    background-color: #ff8e20;
+    color: #fff;
+}
+
+/*无效按钮（不能点击）*/
+.page_small > .invalid {
+    cursor: auto;
+}
+
+/*翻页第二版 end*/
+
+/*提示框*/
+.tip_box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -175px;
+    width: 350px;
+    height: 100px;
+    background: rgba(31, 43, 57, 0.6);
+    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr=#DA314357, endColorstr=#DA314357);
+    color: #fff;
+    font-size: 16px;
+    line-height: 100px;
+    text-align: center;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    z-index: 999;
+}
+
+/*询问框*/
+.tip_mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.4);
+    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr=#26000000, endColorstr=#26000000);
+}
+
+.tip_confirm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 260px;
+    height: 150px;
+    margin-top: -75px;
+    margin-left: -130px;
+    padding: 0;
+    pointer-events: auto;
+    background-color: #fff;
+    -webkit-background-clip: content;
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
+    -webkit-overflow-scrolling: touch;
+    border-radius: 2px;
+}
+
+.confirm_text {
+    padding: 36px 20px 20px;
+    font: 14px/24px "Microsoft YaHei";
+    color: #333;
+    text-align: center;
+}
+
+.confirm_btn {
+    padding: 6px 20px;
+}
+
+.confirm_btn span {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    height: 28px;
+    width: 100px;
+    font: 400 14px/28px "Microsoft YaHei";
+    text-align: center;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.confirm_btn .btn_sure {
+    border: 1px solid #4898d5;
+    background-color: #2e8ded;
+    color: #fff;
+}
+
+.confirm_btn .btn_cancel {
+    border: 1px solid #dedede;
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.gray {
+    color: #787878;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+/*处理password输入框提示信息
+<div class="input_group">
+<txt class="label">密码</txt> //js自动处理
+<input id="password" type="password" placeholder="密码" />
+</div>
+*/
+
+.input_group > .label {
+    position: absolute;
+    left: 58px;
+    top: 0;
+    height: 38px;
+    line-height: 38px;
+    font-size: 14px;
+    color: #888;
+    z-index: 2;
+}

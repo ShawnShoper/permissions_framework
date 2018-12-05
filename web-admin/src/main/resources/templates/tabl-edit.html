@@ -1,0 +1,669 @@
+<!doctype html>
+<html >
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<!--优先使用 IE 最新版本和 Chrome-->
+<meta name="renderer" content="webkit">
+<meta name="author" content="2016.4.17">
+<title>集客宝全球旅游分销系统v2.1.0</title>
+<link rel="stylesheet" type="text/css" href="css/jihe.css">
+<link rel="stylesheet" type="text/css" href="css/globle.css">
+<style>
+	.address .daq-select{ margin-right:10px;}
+	.checkbox_wrap{ margin-right:20px;}
+	.radio_wrap{ margin-right:10px;}
+</style>
+</head>
+<body style="overflow:hidden;">
+<!--posi S-->
+<div class="posi_box">
+	<span>当前位置：</span><a>首页</a>-<a>资源管理</a>-<a>景区资源</a>-<a>添加景区</a>
+</div>
+<!--posi E-->
+	
+
+<!--content S-->
+<div class="wrap_con">
+<div id="warp_box">
+	<div class="bg_white" style=" position:relative; padding-bottom:30px;margin-top:75px;*margin-top:90px;">
+    	<div class="tit_box tit_pos clearfix">
+        	<i class="tit_icon tit_icon4"></i><span class="fl">景区资料审核</span>
+			<ul class="tit_tab">
+				<li class="curr" tag="#info1"><a href="javascript:;">基本信息<span></span></a><i></i></li>
+				<li tag="#info2"><a href="javascript:;">有效期/价格/库存<span></span></a><i></i></li>
+				<li tag="#info3"><a href="javascript:;" >退款信息<span></span></a><i></i></li>
+				<li tag="#info4"><a href="javascript:;">产品信息<span></span></a><i></i></li>
+			</ul>
+      </div>
+        
+			<div class="tbl_box" >
+				<table class="tbl_form" border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td id="info1" class="tbl_name " colspan="2"><span>基本信息</span></td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>景区资源：</span></td>
+						<td><input class="s_input s_input_fb w318" type="text" /><span class="tbl_gray">用户名组成规则：最长20字符，不区分大小写，不能使用特殊字符</span><span class="tip right_tip">正确提示（用于输入正确提示）</span></td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>所属区域：</span></td>
+						<td>
+							<div class="address">
+								<select class="prov addrprovince"></select>
+								<select class="prov addrcity"></select> 
+								<select class="prov addrcounty"></select>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>选择景区：</span></td>
+						<td>
+							<select class="jq" style="display: none">
+								<option value="1">选择景区</option>
+								<option value="2">请选择这里2</option>
+								<option value="3">请选择这里3</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><span>景区图片：</span></td>
+						<td>
+							<label class="pic_one"><img src="images/upload/pic.jpg"/><span class="pic_oper"><a class="lf"></a><a class="del"></a><a class="rt"></a></span></label>
+							<label class="pic_one"><img src="images/upload/pic.jpg"/><span class="pic_oper"><a class="lf"></a><a class="del"></a><a class="rt"></a></span></label>
+							<label class="pic_one"><img src="images/upload/pic.jpg"/><span class="pic_oper"><a class="lf"></a><a class="del"></a><a class="rt"></a></span></label>
+							<a class="big_add"></a>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>门票类型：</span></td>
+						<td>
+							<label class="typ_one">成人票</label><label class="typ_one">儿童票</label><label class="typ_one">团体票</label><a class="sm_add" href="javascript:;"></a>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>各种宽度：</span></td>
+						<td>
+							<input class="s_input s_input_fb w80" type="text" value="80"/>
+							<input class="s_input s_input_fb w100" type="text" value="100"/>
+							<input class="s_input s_input_fb error w120" type="text" value="错误状态,宽度120"/><span class="tip error_tip">错误提示（用于输入错误提示）</span>
+							<input class="s_input s_input_fb w150" type="text" value="150"/>
+							<input class="s_input s_input_fb w170" type="text" value="170"/>
+							<input class="s_input s_input_fb w240" type="text" value="240"/>
+							<input class="s_input s_input_fb w400" type="text" value="400"/>
+							<input class="s_input s_input_fb w318" type="text" value="318"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>经度：</span></td>
+						<td>
+							<input class="s_input s_input_fb w318" type="text" value="102.118774"/>
+							<a id="bz" class="bz_btn">标注</a>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>纬度：</span></td>
+						<td>
+							<input class="s_input s_input_fb w118" type="text" value="29.646265"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>网站LOGO：</span></td>
+						<td>
+							<input class="s_input w318 fom_inp" type="text" value=""/>
+							<a href="javascript:;" class="select_btn sp_btn">上传</a>
+							<p class="s_tip">PNG格式图片，尺寸大于400*300</p> 
+						</td>
+					</tr>
+
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>手机验证码：</span></td>
+						<td>
+							<input class="s_input w120 fom_inp" type="text" value=""/>
+							<a href="javascript:;" class="select_btn">获取验证码</a>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>所属区域：</span></td>
+						<td>
+							<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox"></label>骑行</span>
+							<span class="checkbox_wrap"><input class="check_init" type="checkbox" checked="checked"><label class="checkbox active"></label>湿地公园</span>
+							<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox"></label>温泉</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><span>审核结果：</span></td>
+						<td>
+							<span class="radio_wrap"><input class="deRadio" type="radio" name="shjg"><label class="radio active" name="shjg"></label>1</span>
+							<span class="radio_wrap"><input class="deRadio" type="radio" name="shjg"><label class="radio" name="shjg"></label>2</span>
+							<span class="radio_wrap"><input class="deRadio" type="radio" name="shjg"><label class="radio" name="shjg"></label>3</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><span>景区描述：</span></td>
+						<td>
+							<textarea class="fom_texarea" placeholder="请在这里填写审核不通过的说明文字！"></textarea><span class="tbl_gray">0/100字</span>
+							<p class="tbl_tip">必须包含以下内容：【费用包含】 【费用不包含】  1000字以内。</p>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"></td>
+						<td>
+							<input class="fom_btn" type="button" value="保存"/>
+							<input class="fom_btn" type="button" value="退出"/>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div class="tbl_box">
+				<table class="tbl_form" border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td id="info2" class="tbl_name " colspan="2"><span>有效期/价格/库存</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>分销价格：</span></td>
+						<td>
+							<input class="s_input s_input_fb w120" type="text" value=""/><span class="tbl_gray">人名币/元</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>价格/库存：</span></td>
+						<td>
+							<span class="radio_wrap radio_div"><input class="deRadio" type="radio" name="kc_date"><label class="radio active" name="kc_date"></label>需用户指定使用日期，用户所选使用日期起</span>
+							<span class="radio_wrap radio_div"><input class="deRadio" type="radio" name="kc_date"><label class="radio" name="kc_date"></label>无需用户指定使用日期，可使用日期范围内均有效</span>
+							<div class="radio_tab radio_rl">
+								<p class="rl_date">
+									<a class="prev" href="javascript:;"></a>
+									<span>2016年3月</span>
+									<a class="next" href="javascript:;"></a>
+								</p>
+								<table class="rl_tbl" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<th>日</th>
+										<th>一</th>
+										<th>二</th>
+										<th>三</th>
+										<th>四</th>
+										<th>五</th>
+										<th>六</th>
+									</tr>
+									<tr>
+										<td><span></span></td>
+										<td><span></span></td>
+										<td><span></span></td>
+										<td><span class="before">1</span></td>
+										<td><span class="before">2</span></td>
+										<td><span class="before">3</span></td>
+										<td><span class="before">4</span></td>
+									</tr>
+									<tr>
+										<td><span class="before">5</span></td>
+										<td><span class="before">6</span></td>
+										<td><span class="before">7</span></td>
+										<td><span class="before">8</span></td>
+										<td><span class="before">9</span></td>
+										<td><span class="before">10</span></td>
+										<td><span class="before">11</span></td>
+									</tr>
+									<tr>
+										<td><span class="before">12</span></td>
+										<td><span class="curr">13</span></td>
+										<td><span>14</span></td>
+										<td><span>15</span></td>
+										<td><span>16</span></td>
+										<td><span>17</span></td>
+										<td><span>18</span></td>
+									</tr>
+									<tr>
+										<td><span>19</span></td>
+										<td><span>20</span></td>
+										<td><span>21</span></td>
+										<td><span>22</span></td>
+										<td><span>23</span></td>
+										<td><span>24</span></td>
+										<td><span>25</span></td>
+									</tr>
+									<tr>
+										<td><span>26</span></td>
+										<td><span>27</span></td>
+										<td><span>28</span></td>
+										<td><span>29</span></td>
+										<td><span>30</span></td>
+										<td><span>31</span></td>
+										<td><span></span></td>
+									</tr>
+								</table>
+								<p class="rl_price">
+									<span>市价：180.00元</span>
+									<span>售价：160.00元</span>
+									<span style=" margin-right:0;">库存：9999</span>
+								</p>
+							</div>
+							
+							<div class="radio_tab none">
+								<table class="rl_jg" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td class="rl_jqname">票面价格：</td>
+										<td><span>&yen;200</span></td>
+									</tr>
+									<tr>
+										<td class="rl_jqname">售卖价格：</td>
+										<td><span>&yen;180</span></td>
+									</tr>
+									<tr>
+										<td class="rl_jqname">结算价格：</td>
+										<td><span>&yen;168</span></td>
+									</tr>
+									<tr>
+										<td class="rl_jqname">整体库存：</td>
+										<td><span>9999</span></td>
+									</tr>
+									<tr>
+										<td class="rl_jqname">有效期：</td>
+										<td><span>2016-05-06 至 2016-05-06</span></td>
+									</tr>
+								</table>
+								<a class="bz_btn" href="javascript:;">编辑价格</a>
+							</div>
+							
+						</td>
+					</tr>
+				</table>
+			</div>
+		
+			<div class="tbl_box">
+				<table class="tbl_form" border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td id="info3" class="tbl_name " colspan="4"><span>退款信息</span></td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><span>用户名：</span></td>
+						<td>黄小野<span class="orange">【超级管理员】</span></</td>
+						<td class="tbl_tit"><span>采购日期：</span></td>
+						<td>2016-02-16 08:00:00</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>采购产品：</span></td>
+						<td>峨眉山景区门票</td>
+						<td class="tbl_tit"><span>提现费率：</span></td>
+						<td>25‰<span class="orange">【单位：千分之几，例如1表示千分之一，以此类推】</span></td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><span>密码保护：</span></td>
+						<td><span class="oper_span"><a>修改密码</a></span></td>
+						<td class="tbl_tit"><span>账户余额：</span></td>
+						<td>预存款<span class="orange">&yen;2089.80</span><span class="oper_span"><a>【查看明细】</a></span></td>
+					</tr>
+				</table>
+			</div>
+		
+		<div class="tab_con">
+			<div class="tbl_box">
+				<table class="tbl_form" border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td id="info4" class="tbl_name " colspan="4"><span>产品信息</span></td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>当前余额：</span></td>
+						<td>&yen;189.00</td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>充值金额：</span></td>
+						<td><input class="s_input s_input_fb w318" type="text" /></td>
+					</tr>
+					<tr>
+						<td class="tbl_tit"><b class="mark">*</b><span>充值方式：</span></td>
+						<td>
+							<a class="payoff pay_alipay" href="javascript:;">
+								<span class="radio_wrap"><input class="deRadio" type="radio" name="pay"><label class="radio" name="pay"></label></span>
+							</a>
+							<a class="payoff pay_wechat" href="javascript:;">
+								<span class="radio_wrap"><input class="deRadio" type="radio" name="pay"><label class="radio" name="pay"></label></span>
+							</a>
+							<a class="payoff pay_balance" href="javascript:;">
+								<span class="radio_wrap"><input class="deRadio" type="radio" name="pay"><label class="radio" name="pay"></label></span>
+								<span class="pay_b_txt">
+									<i>余额支付</i>
+									<strong>&yen;2897.80</strong>
+								</span>
+							</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+    </div>
+	
+	<div class="bg_white" style=" margin-top:20px; padding-bottom:30px;">
+		<div class="tit_box clearfix">
+        	<i class="tit_icon tit_icon14"></i><span class="fl">分销详情</span>
+        </div>
+		<div class="tbl_box">
+			<h4 class="small_tit">已分销（5份）</h4>
+			<table class="tbl_form add_tbl" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<th>联系人姓名</th>
+					<th>联系人电话</th>
+					<th>分销单价</th>
+					<th>备注信息</th>
+					<th>验证码</th>
+					<th>操作</th>
+				</tr>
+				<tr>
+					<td class="tbl_oper">黄小叶</td>
+					<td class="tbl_oper">18782919759</td>
+					<td class="tbl_oper">&yen;80:00</td>
+					<td class="tbl_oper">无</td>
+					<td class="tbl_oper">123456、345246/894523</td>
+					<td class="tbl_oper"><span class="oper_span"><a>重发短信</a></span></td>
+				</tr>
+				<tr>
+					<td class="tbl_oper">黄小叶</td>
+					<td class="tbl_oper">18782919759</td>
+					<td class="tbl_oper">&yen;80:00</td>
+					<td class="tbl_oper">无</td>
+					<td class="tbl_oper">123456、345246/894523</td>
+					<td class="tbl_oper"><span class="oper_span"><a>重发短信</a></span></td>
+				</tr>
+			</table>
+			<h4 class="small_tit">未分销（5份）</h4>
+			<div class="wfx_box">45621325 <span>/</span>45621325<span>/</span>45621325<span>/</span>45621325<span>/</span>45621325</div>
+		</div>
+	</div>
+	
+	<div class="bg_white" style=" margin-top:20px; padding-bottom:30px;">
+		<div class="tit_box clearfix">
+        	<i class="tit_icon tit_icon5"></i><span class="fl">钱包充值</span>
+        </div>
+	</div>
+	
+	<div class="bg_white" style=" margin-top:20px; padding-bottom:30px; position:relative;">
+		<div class="tit_box clearfix">
+        	<i class="tit_icon tit_icon1"></i><span class="fl">新增角色</span>
+        </div>
+		<div class="tbl_box">
+			<table class="tbl_form" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td class="tbl_tit"><span>角色名称：</span></td>
+					<td colspan="2"><input class="s_input s_input_fb w318" type="text"  value="超级管理员"></td>
+				</tr>
+				<tr>
+					<td class="tbl_tit"><span>角色编码：</span></td>
+					<td colspan="2"><input class="s_input s_input_fb w318" type="text"  value="24852455"></td>
+				</tr>
+				<tr>
+					<td rowspan="4" class="tbl_tit"><span>角色权限：</span></td>
+					<td colspan="2"><span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox"></label>全选/全不选</span></td>
+				</tr>
+				<tr>
+					<td rowspan="3"  class="w120" ><span class="checkbox_wrap" ><input class="check_init" type="checkbox"><label class="checkbox"></label>订单管理</span></td>
+					<td>
+						<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox active"></label>订单管理</span>
+						<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox"></label>订单发货</span>
+						<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox"></label>订单添加</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox"></label>退款管理</span>
+						<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox active"></label>退款审核</span>
+						<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox"></label>退款处理</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox"></label>景区删除</span>
+						<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox active"></label>景区审核</span>
+						<span class="checkbox_wrap"><input class="check_init" type="checkbox"><label class="checkbox"></label>快速验证</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="tbl_tit"></td>
+					<td colspan="2">
+						<input class="fom_btn" type="button" value="保存">
+						<input class="fom_btn" type="button" value="返回">
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<div class="bg_white" style=" margin-top:20px; padding-bottom:30px;">
+		<div class="tit_box clearfix">
+        	<i class="tit_icon tit_icon12"></i><span class="fl">退款详情</span>
+        </div>
+		<div style=" padding:0 10px;">
+			<ul class="order_ul">
+				<li class="curr">结算总表</li>
+				<li>订单明细</li>
+			</ul>
+			<div class="order_box">
+				<table class="table_con" border="0" cellpadding="0" cellspacing="0">
+					<thead> 
+						<tr>
+							<th width="200"><span>账期</span></th>
+							<th class="tbl_100"><span>应付金额</span></th>
+							<th class="tbl_100"><span>订单总额</span></th>
+							<th class="tbl_100"><span>退款金额</span></th>
+							<th><span class="tbl_100">佣金</span></th>
+							<th class="tbl_100"><span>人工整理</span></th>
+							<th class="tbl_100"><span>手续费</span></th>
+							<th>原因说明</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>2016/01/01-2016/01/31</td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td><p>九寨沟风景名胜区</p></td>
+						</tr>
+						<tr>
+							<td>2016/01/01-2016/01/31</td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+							<td><p>九寨沟风景名胜区</p></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="order_box none">
+				<table class="table_con" border="0" cellpadding="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th width="200"><span>账期2</span></th>
+						<th class="tbl_100"><span>应付金额2</span></th>
+						<th class="tbl_100"><span>订单总额2</span></th>
+						<th class="tbl_100"><span>退款金额2</span></th>
+						<th><span class="tbl_100">佣金2</span></th>
+						<th class="tbl_100"><span>人工整理2</span></th>
+						<th class="tbl_100"><span>手续费2</span></th>
+						<th>原因说明</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>2016/01/01-2016/01/31</td>
+						<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+						<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+						<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+						<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+						<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+						<td class="tbl_100"><span class="order_price">&yen;1,783.00</span></td>
+						<td><p>九寨沟风景名胜区</p></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/list.js"></script>
+<script src="js/main.js"></script>
+<script src="js/map.js"></script>
+<script src="js/jquery.dropdaq.js"></script>
+<script src="js/address.js"></script>
+<script src="layer/layer.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=94ba6c063a989ee14c054c00a45aedda	"></script>
+<script>
+$(function(){
+	wrapH();
+	//标注弹窗
+	$("#bz").on("click",function(){
+		layer.open({
+		  type: 1,
+		  title : "位置标注",
+		  skin: 'lay_tips_wz', //样式类名
+		  closeBtn: 1, //不显示关闭按钮
+		  shift: 0,
+		  yes: function(index, layero){ 
+		  	// 提示信息
+		  	$('.lay_tiprow').addClass('lay_tipsuccess').html('<span class="tip success_tip">验证码已发送到您的手机，请注意查收！</span>');
+		  },
+		  cancel: function(index){ 
+		  },
+		  area: ['590px', '458px'],
+		  shadeClose: true, //开启遮罩关闭
+		  content: '<div class="tipcon_wrap lay_map"><div class="lay_map_top"><div class="lay_map_search"><input class="s_input s_input_map" type="text" placeholder="请输入地址获取对应坐标位置" /><a class="s_map_btn" href="javascript:;">标注</a></div><a class="s_mbtn">确定</a></div><div class="lay_map_con" id="lay_map_con"></div></div>'
+		});
+
+		// 百度地图API功能
+		var map = new BMap.Map("lay_map_con");    // 创建Map实例
+		map.centerAndZoom(new BMap.Point(104.0495350000, 30.6487320000), 13);  // 初始化地图,设置中心点坐标和地图级别
+		var navigationControl = new BMap.NavigationControl({
+		    // 靠左上角位置
+		    anchor: BMAP_ANCHOR_TOP_LEFT,
+		    // LARGE类型
+		    type: BMAP_NAVIGATION_CONTROL_LARGE,
+		    // 启用显示定位
+		    enableGeolocation: true
+		  });
+		map.addControl(navigationControl);
+		map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+		map.setCurrentCity("成都");          // 设置地图显示的城市 此项是必须设置的
+		map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+	});
+	var tmpArr = [];
+	var tmpi = 0;
+	//信息切换
+	$(".tit_tab li").on("click",function(){  
+		if(tmpi == 0){
+			$(this).parent().find('li').each(function(k,v){
+				var tmpPosition = $($(v).attr('tag')).offset().top -120;
+				tmpArr.push(tmpPosition);
+			})
+		}
+		var i_index = $(this).index();
+	
+		$(this).addClass("curr").siblings().removeClass("curr");   
+		$(".wrap_con").animate({scrollTop: tmpArr[i_index]}, 200); 
+		tmpi++;
+	});
+	
+	//账单总表切换
+	$(".order_ul li").on("click",function(){
+	var orderNum = $(this).index();
+		$(this).addClass("curr").siblings("li").removeClass("curr");
+		$(".order_box").eq(orderNum).fadeIn(200).siblings(".order_box").hide();
+	});
+	
+	//价格库存切换
+	$(".radio_div").on("click",function(){
+		var radNum = $(this).index();
+		$(".radio_tab").eq(radNum).fadeIn(200).siblings(".radio_tab").hide();
+	});
+	
+
+	
+	
+	/* 选择景区 */
+	$('.jq').dropDqDefault({
+		deVal : "选择景区",
+		change: function (value, text) {
+		   console.log('You picked: ' + value + ':' + text);
+		}
+	});
+	
+	// checkbox 事件
+	$('.checkbox_wrap').on('click', function(){
+		if($(this).find('.checkbox').hasClass('active')){
+		    $(this).find('.checkbox').removeClass('active');
+		    $(this).find('.checkbox').siblings("input[type='checkbox']").removeAttr('checked')
+		}
+		else{
+		    $(this).find('.checkbox').addClass('active');
+		    $(this).find('.checkbox').siblings("input[type='checkbox']").attr('checked','checked')
+		}
+	})
+	
+	
+	// radio 事件
+	$('.radio_wrap').on('click', function(e){
+		e.stopPropagation();
+		var radioName = $(this).find('.radio').attr('name');
+		$('label[name="'+ radioName +'"]').removeClass('active').siblings('input[name="'+ radioName +'"]').removeAttr('checked','checked');
+		$(this).find('.radio').addClass('active').siblings('input[name="'+ radioName +'"]').attr('checked', 'checked');
+		$(this).parent().addClass('active').siblings().removeClass('active');
+	})
+	
+	// pay
+	$('.payoff').click(function(){
+		$(this).addClass('active').siblings('.payoff').removeClass('active');
+		$(this).find('.radio_wrap').trigger('click');
+	})
+	
+	
+	//图片hover
+	$(".pic_one").hover(function(){
+		$(this).children(".pic_oper").fadeIn(200);
+		},function(){
+			$(this).children(".pic_oper").fadeOut(200);
+		})
+	// address
+	// 注意要先引入map.js
+	$('.address').addressSelect({
+		// 是否开启搜素
+		search : true,
+		z_index : 20,
+		// 事件回调   {0 : {id: "120000",sName: "天津市"}, 1 : {id: "120200",sName: "市辖县"}, 2 : {id: "120223",sName: "静海县"}}
+		// 0 代表省   1 代表 市  2 代表 县
+		change : function(v){
+			console.log(v)
+		},
+		// 当编辑时，需要默认选中省，市，区时，传入相关值
+		defaultAddr : {
+			provinceId : 510000,
+			cityId : 510100,
+			countyId : 510104
+		}
+	});
+	})
+$(window).resize(function(e) {
+    wrapH();
+});
+function wrapH(){
+	var hh = $(window).height();
+	$(".wrap_con").height(hh - $(".posi_box").height() - 15);
+	var ww=$(window).width()-45; 
+	$(".tit_pos").css("width",ww+"px");  
+	$("#warp_box").css("width",ww+"px");  
+}
+</script>
+
+<!--content E-->
+
+</body>
+</html>

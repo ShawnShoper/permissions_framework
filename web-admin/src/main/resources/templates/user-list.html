@@ -1,0 +1,724 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="_csrf" th:content="${_csrf.token}" content=""/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" content=""/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <!--优先使用 IE 最新版本和 Chrome-->
+    <meta name="renderer" content="webkit">
+    <meta name="author" content="2016.4.17">
+    <title>集客宝全球旅游分销系统v2.1.0</title>
+    <link rel="stylesheet" type="text/css" href="css/jihe.css"/>
+    <link rel="stylesheet" type="text/css" href="css/globle.css"/>
+    <link rel="stylesheet" href="css/tools.css"/>
+    <style>
+        .daq-select {
+            margin: 12px 10px auto 0;
+        }
+
+        .page_wrap {
+            margin-top: 12px;
+        }
+
+        .daq-page_select {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+<!--posi S-->
+<div class="posi_box">
+    <span>当前位置：</span><a>首页</a>-<a>用户管理</a>
+</div>
+<!--posi E-->
+<!--content S-->
+<div id="operateBox" class="topd_box">
+
+</div>
+
+<div class="tbl_out">
+    <div class="tbl_scro">
+        <table id="userTable" class="table_con" border="0" cellpadding="0" cellspacing="0">
+            <thead>
+            <tr>
+                <th class="tbl_chebox">
+            <span class="checkbox_wrap checkbox_box select_all">
+                <input name="checkboxHead" class="check_init" type="checkbox"><label class="checkbox"></label>
+            </span>
+                </th>
+                <th class="tbl_100"><span>序号</span></th>
+                <th>用户名</th>
+                <th>姓名</th>
+                <th>邮箱</th>
+                <th>错误登录次数</th>
+            </tr>
+            </thead>
+            <tbody id="userList">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="page_wrap clearfix">
+        <select id="pidPage" class="page_select niccSelect">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <div class="pages" id="turnPage">
+
+        </div>
+    </div>
+
+</div>
+<!--content E-->
+</body>
+
+<script type="text/template" id="operateTemp">
+    {{each operate}}
+    {{if $value === 'search'}}
+    <div class="sear_box sear_box02">
+        <select id="roleSelector" class="js fl" style="display: none">
+        </select>
+        <input id="keyWord" class="s_input search_input mt12 fl" type="text" placeholder="请输入用户名关键字搜索">
+        <input id="searchBtn" class="s_btn s_btn_search" type="button" value="搜索"/>
+    </div>
+    {{/if}}
+    {{/each}}
+
+    <div class="oper_box">
+        {{each operate}}
+        {{if $value === 'add'}}<a id="addUser" class="oper_btn"><img src="images/opa_add.png"/><span>新增</span></a>
+        {{else $value === 'edit'}}<a id="editUser" class="oper_btn"><img src="images/opa_edit.png"/><span>编辑</span></a>
+        {{else $value === 'delete'}}<a id="deleteUser" class="oper_btn">
+        <img src="images/opa_dele.png"/><span>删除</span></a>
+        {{/if}}
+        {{/each}}
+    </div>
+</script>
+
+<script type="text/template" id="tableTemp">
+    {{each users}}
+    <tr>
+        <td class="tbl_chebox" data-id="${ id }">
+            <span class="checkbox_wrap checkbox_box select_item">
+                <input name="item" class="check_init" type="checkbox">
+                <label class="checkbox" data-id="${ id }"></label>
+            </span>
+        </td>
+        <td>${ $index + 1 }</td>
+        <td>${ name || "~"}</td>
+        <td>${ userName || "~" }</td>
+        <td>${ email || "~" }</td>
+        <td>${ errCount || "0" }</td>
+    </tr>
+    {{/each}}
+</script>
+
+<script type="text/template" id="roleTemp">
+    <option>全部角色</option>
+    {{each roles}}
+    <option value="${ id }">${ name }</option>
+    {{/each}}
+</script>
+
+<script type="text/template" id="userInfoTemp">
+    <div id="warp_box" style="width: 850px;">
+        <div class="bg_white" style=" margin-top:20px; padding-bottom:30px;">
+            <div class="tbl_box">
+                
+                    <table class="tbl_form" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                        <tr>
+                            <td class="tbl_tit">
+                                <b class="mark">*</b>
+                                <span>账号：</span>
+                            </td>
+                            <td><input class="s_input s_input_fb w318" placeholder="请在这里填写用户账号" type="text"
+                                       name="username" required="true" regexp="false"
+                                       value="${ userInfo.userName || '' }">
+                                <span class="gray">不超过18个英文字符</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="tbl_tit">
+                                <b class="mark">*</b>
+                                <span>姓名：</span>
+                            </td>
+                            <td>
+                                <input class="s_input s_input_fb w318" placeholder="请在这里填写用户姓名" type="text" name="name"
+                                       required="true" regexp="false" value="${ userInfo.name || '' }">
+                                <span class="gray">不超过10个中文字符</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tbl_tit">
+                                <b class="mark">*</b>
+                                <span>邮箱：</span>
+                            </td>
+                            <td>
+                                <input class="s_input s_input_fb w318" placeholder="请在这里填写邮箱" type="text"
+                                       name="mail" required="true" regexp="false" value="${userInfo.email || ''}">
+                                <span class="gray"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tbl_tit">
+                                <b class="mark">*</b>
+                                <span>角色：</span>
+                            </td>
+                            <td id="roleCheck">
+                                {{each roles}}
+                                <span class="checkbox_wrap">
+                                    <input class="check_init" type="checkbox" name="role" {{if userInfo.roles &&
+                                           isChecked(id, userInfo.roles) }}checked="checked" {{/if}} value="${ id }">
+                                    <label class="checkbox {{if userInfo.roles && isChecked(id, userInfo.roles) }}active{{/if}}"></label>${ name }
+                                 </span>
+                                {{/each}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                
+            </div>
+        </div>
+    </div>
+</script>
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.tmpl.min.js"></script>
+<script src="js/jquery.dropdaq.js"></script>
+<script src="js/tools.js"></script>
+<script src="js/page.js"></script>
+<script src="js/common.js"></script>
+<script src="js/list.js"></script>
+<script src="layer/layer.js"></script>
+<script src="js/menu.js"></script>
+<script>
+    var rows = 10;//每页10条数据
+    var name = '', role = '';//name、role记录搜索条件
+    var loginUser = 'my';//当前用户账号，删除时不能删除自己
+    var roles = [];//保存系统所有的角色信息
+
+    $(function () {
+        placeHolder('.search_input');
+
+        renderOperate();
+
+        //渲染角色列表
+        renderRoleList();
+
+        //获取用户列表
+        getUserList(1);
+
+        // page_select一页多少条的转变
+        $('#pidPage').change(function () {
+            //每页条数
+            var limits = $(this).val();//这就是selected的值
+            rows = limits || 10;
+
+            getUserList(1);
+        });
+
+        // checkbox 事件
+        checkBox();
+    });
+
+    function renderRoleList() {
+        tools.executeRequest({
+            method: "POST",
+            url: "/roles"
+        }, function (result) {
+            if (!result.code) {
+                if (result.datas && result.datas.length > 0) {
+                    roles = result.datas;
+                    $('#roleTemp').tmpl({roles: roles}).appendTo('#roleSelector');
+                    /* 下拉菜单处理*/
+                    $('#roleSelector').dropDqDefault({
+                        deVal: "全部角色",
+                        riInput: "",
+                        change: function (value, text) {
+                            role = text;
+                        }
+                    });
+                } else {
+                    tools.tip({
+                        message: "暂无角色，请先创建！",
+                        complete: function () {
+                        }
+                    });
+                }
+            } else {
+                tools.tip({
+                    message: "获取角色失败，请尝试刷新！",
+                    complete: function () {
+                    }
+                });
+            }
+        });
+    }
+
+    function getUserList(page) {
+        var $userList = $('#userList');
+        $userList.empty();
+
+        resetHeadCheckBox();
+
+        var loading = tools.loading({
+            selector: '#userList'
+        });
+
+        tools.executeRequest({
+            method: 'get',
+            url: '/user_mgr/user',
+            data: {
+                page: page || 1
+                , limit: rows || 10
+//                , role: role || ''
+//                , name: name || ''
+            }
+        }, function (result) {
+            loading.clean();
+            if (!result.code) {
+                if (result.datas && result.datas.length > 0) {
+                    $('.page_wrap').show();
+                    $('#tableTemp').tmpl({
+                        users: result.datas,
+                        getRoleName: function (userRoles) {
+                            var names = [];
+                            for (var i = 0; i < userRoles.length; i++) {
+                                for (var j = 0; j < roles.length; j++) {
+                                    if (userRoles[i] === roles[j].id) {
+                                        names.push(roles[j].name);
+                                    }
+                                }
+                            }
+
+                            return names.join(',');
+                        }
+                    }).appendTo($userList);
+
+                    //绑定数据
+                    $('input[name="item"][type="checkbox"]').each(function (index, item) {
+                        $(item).next().data({userInfo: result.datas[index]});
+                    });
+
+                    //分页
+                    setOfPageNumber($("#turnPage"), rows, result.page.total, page, "getUserList");
+
+                    /////////tr-td样式hover效果
+                    $userList.find("tbody > tr:odd").addClass("even");
+                    $userList.find("tbody > tr:even").addClass("odd");
+                    $userList.find("tr").on("mouseover mouseout", function () {
+                        $(this).toggleClass(".hover");
+                    });
+                } else {
+                    $('#tableTemp').tmpl({
+                        users: []
+                    }).appendTo($userList);
+
+                    $('.page_wrap').hide();
+                    $('#userList').html('<tr><td colspan="7">' + tools.NO_DATA1 + '</td></tr>');
+                }
+            } else {
+                $('#tableTemp').tmpl({
+                    users: []
+                }).appendTo($userList);
+
+                $('.page_wrap').hide();
+                $('#userList').html('<tr><td colspan="7">' + tools.TRY_REFRESH1 + '</td></tr>');
+            }
+        });
+    }
+
+    //重置表头的checkbox
+    function resetHeadCheckBox() {
+        $('input[name="checkboxHead"]').attr('checked', '').next().removeClass('active');
+    }
+
+
+    function initOperateEvent() {
+        //新增用户
+        $('#addUser').click(function () {
+            if ($(this).hasClass('disabled')) {
+                return;
+            }
+
+            $("#addUser").addClass("disabled");
+
+            if (roles.length === 0) {
+                tools.tip({
+                    message: "暂无角色，请先添加角色！",
+                    complete: function () {
+                        $("#addUser").removeClass("disabled");
+                    }
+                });
+
+                return;
+            }
+
+            $("#addUser").removeClass("disabled");
+            showUserInfoBox({
+                roles: roles
+            });
+        });
+
+        //编辑用户
+        $('#editUser').on("click", function () {
+            if ($(this).hasClass('disabled')) {
+                return;
+            }
+
+            $("#editUser").addClass("disabled");
+
+            if (roles.length === 0) {
+                tools.tip({
+                    message: "暂无角色，请先添加角色！",
+                    complete: function () {
+                        $("#editUser").removeClass("disabled");
+                    }
+                });
+
+                return;
+            }
+
+            var selects = $('input[checked][name!="checkboxHead"]').length;
+            if (selects === 0) {
+                tools.tip({
+                    message: "请选择一项进行编辑！",
+                    complete: function () {
+                        $("#editUser").removeClass("disabled");
+                    }
+                });
+
+                return;
+            } else if (selects > 1) {
+                tools.tip({
+                    message: "请只选择一项进行编辑！",
+                    complete: function () {
+                        $("#editUser").removeClass("disabled");
+                    }
+                });
+
+                return;
+            }
+            $("#editUser").removeClass("disabled");
+
+            //获取用户信息
+
+            var userInfo = $("#userTable .checkbox.active").data("userInfo");
+            tools.executeRequest({
+                method: 'GET',
+                url: '/user_mgr/user/' + userInfo.userName,
+            }, function (result) {
+                if (result.code) {
+                    tools.tip({
+                        message: result.message,
+                        complete: function () {
+                            $("#deleteUser").removeClass("disabled");
+                        }
+                    });
+                } else {
+                    showUserInfoBox({
+                        roles: roles,
+                        userInfo: result.data
+                    });
+                }
+            });
+        });
+
+        //删除用户
+        $('#deleteUser').click(function () {
+            if ($(this).hasClass('disabled')) {
+                return;
+            }
+
+            $("#deleteUser").addClass("disabled");
+
+            var selects = $('input[checked][name!="checkboxHead"]').length;
+            if (selects === 0) {
+                tools.tip({
+                    message: "请选择至少一项进行删除！",
+                    complete: function () {
+                        $("#deleteUser").removeClass("disabled");
+                    }
+                });
+            } else {
+                tools.confirm({
+                    count: selects,
+                    sure: function () {
+                        var $selectedUsers = $("#userTable .checkbox.active");
+                        var ids = [];
+
+                        $selectedUsers.each(function (index, item) {
+                            ids.push($(item).attr('data-id'));
+                        });
+
+                        if (ids.indexOf(loginUser) >= 0) {
+                            tools.tip({
+                                message: "抱歉，您不能删除您自己的账号！",
+                                complete: function () {
+                                    $("#deleteUser").removeClass("disabled");
+                                }
+                            });
+                            return;
+                        }
+
+                        var data = "";
+                        for(var id in ids){
+                            data+=ids[id]+"-";
+                        }
+                        data = data.substr(0,data.length-1);
+                        tools.executeRequest({
+                            method: 'DELETE',
+                            url: '/user_mgr/user/'+data,
+                        }, function (result) {
+                            if (!result.code) {
+                                tools.tip({
+                                    message: "删除用户成功！",
+                                    time: 1000,
+                                    complete: function () {
+                                        $("#deleteUser").removeClass("disabled");
+                                        window.location.href = 'user-list';
+                                    }
+                                });
+                            } else {
+                                tools.tip({
+                                    message: "删除用户失败！",
+                                    complete: function () {
+                                        $("#deleteUser").removeClass("disabled");
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    cancel: function () {
+                        $("#deleteUser").removeClass("disabled");
+                    }
+                })
+            }
+        });
+    }
+
+    function showUserInfoBox(option) {
+        var isEdit = option.userInfo ? true : false;
+        layer.open({
+            type: 1,
+            title: isEdit ? "编辑用户" : "添加用户",
+            skin: isEdit ? 'lay_tips_fk' : 'lay_tips_tj', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            shift: 0,
+            zIndex: 99,
+            btn: ['保存', '取消'],
+            yes: function (index, layero) {
+                var $saveBtn = $(layero).find('.layui-layer-btn').children();
+                if ($saveBtn.hasClass('disabled')) {
+                    return;
+                }
+
+                $saveBtn.addClass('disabled');
+
+                var userInfo = getUserInfo($saveBtn);
+                if (!userInfo) {
+                    return;
+                }
+
+//                userInfo = $('#userInfo1').serialize();
+
+                if (!isEdit) {
+                    //加载用户信息
+
+
+                    tools.executeRequest({
+                        method: 'POST',
+                        url: '/user_mgr/user',
+                        data: userInfo
+                    }, function (result) {
+                        if (!result.code) {
+                            tools.tip({
+                                message: "添加用户成功！密码默认为：123456",
+                                time: 2000,
+                                complete: function () {
+                                    window.location.href = 'user-list';
+                                }
+                            });
+                        } else {
+                            tools.tip({
+                                message: "添加用户失败:" + result.message,
+                                complete: function () {
+                                    $saveBtn.removeClass('disabled');
+                                }
+                            });
+                        }
+                    });
+                }
+                else {
+                    tools.executeRequest({
+                        method: 'PUT',
+                        url: '/user_mgr/user/' + userInfo.username,
+                        data: userInfo
+                    }, function (result) {
+                        if (!result.code) {
+                            tools.tip({
+                                message: "更新用户信息成功！",
+                                time: 1000,
+                                complete: function () {
+                                    window.location.href = 'user-list';
+                                }
+                            });
+                        } else {
+                            tools.tip({
+                                message: "更新用户信息失败！",
+                                complete: function () {
+                                    $saveBtn.removeClass('disabled');
+                                }
+                            });
+                        }
+                    });
+                }
+            },
+            area: ['700px', '500x'],
+            shadeClose: true, //开启遮罩关闭
+            content: $('#userInfoTemp').tmpl({
+                roles: option.roles || [],
+                userInfo: option.userInfo || {},
+                isChecked: function (id, roles) {
+                    for (var i = 0; i < roles.length; i++) {
+                        if (id === roles[i].id) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+            }).html()
+        });
+
+        //验证
+        tools.onBlurCheck({
+            selector: 'input[name="mail"]',
+            type: 'email'
+        });
+        tools.onBlurCheck({
+            selector: 'input[name="username"]',
+            type: 'account'
+        });
+
+        tools.onBlurCheck({
+            selector: 'input[name="name"]',
+            type: 'userName',
+            submitBtn: '#saveUser'
+        });
+
+        //角色选择
+        $('#roleCheck').on('click', 'span', function () {
+            var $checkbox = $(this).find('.checkbox').eq(0);
+            if ($checkbox.hasClass('active')) {
+                $checkbox.removeClass('active');
+                $checkbox.siblings("input[type='checkbox']").removeAttr('checked')
+            }
+            else {
+                $checkbox.addClass('active');
+                $checkbox.siblings("input[type='checkbox']").attr('checked', 'checked')
+            }
+        })
+    }
+
+    function getUserInfo($saveBtn) {
+        var userInfo = {};
+        userInfo.username = $('input[name="username"]').val() || '';
+        if (userInfo.username === $('input[name="username"]').attr('placeholder')) {
+            userInfo.username = '';
+        }
+
+        userInfo.email = $('input[name="mail"]').val() || '';
+        if (userInfo.email === $('input[name="mail"]').attr('placeholder')) {
+            userInfo.email = '';
+        }
+
+        userInfo.name = $('input[name="name"]').val() || '';
+        if (userInfo.name === $('input[name="name"]').attr('placeholder')) {
+            userInfo.name = '';
+        }
+
+        userInfo.roles = [];
+        $('input[name="role"]:checked').each(function (index, item) {
+            var role = $(item).val();
+            if (role) {
+                userInfo.roles.push(role);
+            }
+        });
+
+        if (!tools.contentCheck(userInfo.username, tools.TYPES['account']).pass) {
+            tools.tip({
+                message: "请输入用户姓名，且不超过18个字符！",
+                complete: function () {
+                    $saveBtn.removeClass('disabled');
+                }
+            });
+            return;
+        } else if (!userInfo.name || tools.strLength(userInfo.name) > 20) {
+            tools.tip({
+                message: "请输入用户姓名，且不超过20个字符！",
+                complete: function () {
+                    $saveBtn.removeClass('disabled');
+                }
+            });
+            return;
+        } else if (!tools.contentCheck(userInfo.email, tools.TYPES['email']).pass) {
+            tools.tip({
+                message: "请填写正确的邮箱！",
+                complete: function () {
+                    $saveBtn.removeClass('disabled');
+                }
+            });
+            return;
+        } else if (userInfo.roles.length === 0) {
+            tools.tip({
+                message: "请选择用户角色！",
+                complete: function () {
+                    $saveBtn.removeClass('disabled');
+                }
+            });
+            return;
+        }
+
+        return userInfo;
+    }
+
+    function renderOperate() {
+        var id = project.getMenuIdByName(project.menu, '用户管理');
+        tools.executeRequest({
+            method: 'GET',
+            url: '/user/resources?menu='+id,
+        }, function (result) {
+            $('#operateTemp').tmpl({operate: result.datas}).appendTo('#operateBox');
+
+            //搜索事件
+            $('#searchBtn').on('click', function () {
+                searchUser();
+            });
+            $('#keyWord').on('keydown', function () {
+                if (event.keyCode == 13) {
+                    searchUser();
+                }
+            });
+            function searchUser() {
+                name = $('#keyWord').val();
+                if (!role) {
+                    role = "全部角色";
+                }
+                if (!name || name === $('#keyWord').attr('placeholder')) {
+                    name = '';
+                }
+
+                getUserList(1);
+            }
+
+            initOperateEvent();
+        });
+    }
+</script>
+</html>

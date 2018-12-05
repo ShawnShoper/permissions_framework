@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.shoper.web.mapper.RoleMapper">
+    <!--<resultMap id="sys_user" type="org.shoper.security.pojo.SysRole">-->
+    <!--<id column="id" property="id"/>-->
+    <!--<result column="name" property="name"/>-->
+    <!--<result column="email" property="email"/>-->
+    <!--<result column="password" property="password"/>-->
+    <!--<result column="dob" property="dob"/>-->
+    <!--</resultMap>-->
+    <select id="isExists" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT
+        count(0)
+        FROM
+        sys_role
+        WHERE
+        id = #{0}
+    </select>
+    <select id="findAll" resultType="org.shoper.web.pojo.Role">
+        SELECT
+        id
+        ,name
+        ,code
+        FROM
+        sys_role
+    </select>
+    <select id="getRoleIdByUserName" resultType="java.lang.Integer">
+        SELECT
+        ur.rid
+        FROM
+        sys_user_role ur
+        LEFT JOIN sys_user u ON (u.id = ur.uid)
+        WHERE
+        u.username = #{0}
+    </select>
+    <delete id="unbindRoleById">
+        DELETE from sys_user_role where uid=#{0}
+    </delete>
+    <select id="getRoleById">
+        select * from sys_role where id=#{0}
+    </select>
+    <delete id="delRole">
+        DELETE from sys_role where id = #{0}
+    </delete>
+    <delete id="unbindPrivilege">
+        DELETE from sys_role_resource where role_id=#{0}
+    </delete>
+    <delete id="unbindPrivilegeByResId">
+        DELETE from sys_role_resource where role_id=#{0} and resource = #{1}
+    </delete>
+    <select id="getRoleSize" resultType="java.lang.Integer">
+        select count(0) from sys_role
+    </select>
+    <select id="getRoles" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        sys_role
+        LIMIT #{offset},
+        ${limit}
+    </select>
+    <update id="modifyRole">
+         UPDATE sys_role
+        SET NAME = #{1}
+        WHERE
+            id = #{0}
+    </update>
+    <insert id="bindPrivilege">
+        INSERT INTO sys_role_resource (
+        role_id,
+        resource
+        )
+        VALUES (#{0},#{1});
+    </insert>
+    <insert id="addRole" parameterType="org.shoper.web.pojo.Role" useGeneratedKeys="true" keyProperty="id">
+         INSERT INTO sys_role (
+            name,
+            code
+        )
+        VALUES (#{name},#{code});
+    </insert>
+    <select id="getRoleByCode" resultType="org.shoper.web.pojo.Role">
+        select * from sys_role where code = #{0}
+    </select>
+    <select id="checkUserBind" resultType="java.lang.Integer">
+       select count(0) from sys_user_role where rid = #{0}
+    </select>
+</mapper>

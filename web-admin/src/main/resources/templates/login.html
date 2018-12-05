@@ -1,0 +1,162 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <sec:csrfMetaTags/>
+    <meta name="_csrf" th:content="${_csrf.token}" content=""/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" content=""/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <!--优先使用 IE 最新版本和 Chrome-->
+    <meta name="renderer" content="webkit">
+    <meta name="author" content="2016.4.17">
+    <title>集客宝全球旅游分销系统v2.1.0-登录</title>
+    <link rel="stylesheet" type="text/css" href="css/globle.css">
+    <link rel="stylesheet" href="css/tools.css"/>
+    <!--滚动条样式-->
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/bcrypt.min.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script>
+        if (top != self) {
+            if (top.location != self.location)
+                top.location = self.location;
+        }
+    </script>
+</head>
+<body class="login_bg">
+<!--content S-->
+<div class="login_con">
+    <h1 class="login_logo"></h1>
+    <div class="login_user">
+        <span class="user_img"><i></i></span>
+        <p>用户登录</p>
+    </div>
+    <ul class="login_ul">
+        <li class="input_group">
+            <label class="input_label user_name" for="userName"></label>
+            <input id="userName" name="userName" class="user" type="text" placeholder="请输入用户名"/>
+        </li>
+        <li class="input_group">
+            <label class="input_label password" for="password"></label>
+            <input id="password" name="password" class="pwd" type="password" placeholder="请输入登录密码"/>
+        </li>
+        <li class="input_group">
+            <label class="input_label verify_code" for="code"></label>
+            <input id="code" name="verifyCode" class="yzm" type="text" placeholder="请输入验证码"/>
+            <span class="yzm_img"><img class="codeImg" name="codeImg" onclick="load_captcha()" alt="点击刷新"></span>
+        </li>
+        <li class="btn">
+            <input id="loginBtn" type="button" onclick="login()" value="立即登录"/>
+        </li>
+    </ul>
+    <p class="forget_link"><a href="forget.vm">忘记密码?</a></p>
+</div>
+<script type="text/javascript">
+    function login() {
+        var username = $("input[name='userName']").val();
+        var password = $("input[name='password']").val();
+        var captcha = $("input[name='verifyCode']").val();
+        var token = $("img[name='codeImg']").attr("token");
+        var data = {"username": username, "password": password, "captcha": captcha, "token": token};
+        $.ajax({
+            type: "POST",
+            url: "/user/login",
+            xhrFields: {withCredentials: true},
+            data: data,
+            beforeSend: function (xhr) {
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (msg) {
+                if (msg.code == 200) {
+                    window.location.href = "/home";
+                } else {
+                    alert("Code:" + msg.code + "Message:" + msg.message);
+                }
+            }
+        });
+    }
+    function uuid(len, radix) {
+        var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+        var uuid = [], i;
+        radix = radix || chars.length;
+        if (len) {
+            for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
+        } else {
+            var r;
+            uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+            uuid[14] = '4';
+            for (i = 0; i < 36; i++) {
+                if (!uuid[i]) {
+                    r = 0 | Math.random() * 16;
+                    uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+                }
+            }
+        }
+        return uuid.join('');
+    }
+    function generateUUID() {
+        var d = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+        return uuid;
+    }
+    ;
+    var captcha_src = "/captcha?random=";
+    function load_captcha() {
+        var token = uuid(16, 32);
+        $("img[name='codeImg']").attr("src", captcha_src + token);
+        $("img[name='codeImg']").attr("token", token);
+    }
+    load_captcha();
+</script>
+<!--content E-->
+
+<!--bottom S-->
+<div class="footer">
+    <p class="copyright">版权所有：<a target="_blank" href="https://shawnshoper.org/">ShawnShoper</a></p>
+</div>
+<!--bottom E-->
+<script>
+    $(function () {
+        if (($(window).width() <= 1290) && ($(window).height() < 800)) {
+            $(".login_logo > img").css({"width": "255"});
+            $(".login_user p").css({"fontSize": "20px"});
+        }
+        $(".user").focus(function () {
+            $(".user_img i").addClass("photoH");
+            $(this).addClass("userH");
+        });
+        $(".user").blur(function () {
+            $(".user_img i").removeClass("photoH");
+            $(this).removeClass("userH");
+        });
+        $(".pwd").focus(function () {
+            $(".user_img i").addClass("photoH");
+            $(this).addClass("pwdH");
+        });
+        $(".pwd").blur(function () {
+            $(".user_img i").removeClass("photoH");
+            $(this).removeClass("pwdH");
+        });
+        $(".yzm").focus(function () {
+            $(".user_img i").addClass("photoH");
+            $(this).addClass("yzmH");
+        });
+        $(".yzm").blur(function () {
+            $(".user_img i").removeClass("photoH");
+            $(this).removeClass("yzmH");
+        });
+    });
+</script>
+</body>
+</html>

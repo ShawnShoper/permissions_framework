@@ -1,0 +1,178 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8">
+    <meta name="_csrf" th:content="${_csrf.token}" content=""/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" content=""/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <!--优先使用 IE 最新版本和 Chrome-->
+    <meta name="renderer" content="webkit">
+    <meta name="author" content="2016.4.17">
+    <title>集客宝全球旅游分销系统v2.1.0</title>
+    <link rel="stylesheet" type="text/css" href="css/globle.css">
+    <!--滚动条样式-->
+    <link rel="stylesheet" type="text/css" href="css/nanoscroller.css">
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery.nanoscroller.min.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+<!--header S-->
+<div class="header">
+    <h1 class="fl"><img src="images/logo.png" alt="集客宝全球旅游分销系统" width="313" height="40"/><span>v2.1.0</span></h1>
+    <div class="fr">
+        <a class="hd_photo"><img src="images/upload/photo.jpg"/><span
+                th:inline="text">管理员 [[${session.USER_TAG.name}]]</span></a>
+        <a id="logout" class="hd_one hdo4"><span>退出</span></a>
+    </div>
+</div>
+<!--header E-->
+
+
+<!--content S-->
+
+<!--content S-->
+<div class="content clearfix">
+    <!--menu S-->
+    <div class="menu nano fl">
+        <ul id="menuList" class="menu_fir nano-content">
+        </ul>
+    </div>
+    <!--menu E-->
+
+    <!--iframe S-->
+    <div class="main_iframe fl">
+        <iframe id="iframe" name="main_iframe" frameborder="0" allowtransparency="true" scrolling="no" width="100%"
+                height="100%" src=""></iframe>
+    </div>
+    <!--iframe E-->
+</div>
+<!--content E-->
+
+<script type="text/template" id="menuTemp">
+    {{if menu.indexOf('user_role_mgr_menu') >= 0}}
+    <li>
+        <a class="menu_one"><img src="images/icon/ico07.png" data-img="images/icon/ico07_h.png"/><span class="has_chil">用户管理</span></a>
+        <ul class="menu_child">
+            {{if menu.indexOf('user_mgr') >= 0}}
+            <li id="userManage"><a class="sec_one">用户管理</a></li>
+            {{/if}}
+            {{if menu.indexOf('role_mgr') >= 0}}
+            <li id="roleManage"><a class="sec_one">角色管理</a></li>
+            {{/if}}
+        </ul>
+    </li>
+    {{/if}}
+</script>
+
+<script src="./js/jquery.tmpl.min.js"></script>
+<script src="./js/menu.js"></script>
+<script src="./js/tools.js"></script>
+<script>
+    $(function () {
+        tools.executeRequest({
+            method: 'GET',
+            url: '/user/menu'
+        }, function (result) {
+//            var result = {
+//                code: 0,
+//                datas: ['user_role_mgr_menu', 'user_mgr', 'role_mgr']
+//            };
+
+            $('#menuTemp').tmpl({menu: result.datas}).appendTo('#menuList');
+
+            $(".menu").nanoScroller();
+            /*初始化滚动条*/
+            $(".menu_one").bind("click", function () {
+                var img_url = $(this).children("img").attr("src");
+                var imghov_url = $(this).children("img").attr("data-img");
+                $(".menu_child").slideUp(200);
+
+                /*将上个选中状态的图标还原*/
+                var i = $(".menu_fir>li.curr").index();
+                if (i >= 0) {
+                    var imghov = $(".menu_fir>li").eq(i).children(".menu_one").children("img").attr("data-img");
+                    var imgold = $(".menu_fir>li").eq(i).children(".menu_one").children("img").attr("src");
+                    $(".menu_fir>li").eq(i).children(".menu_one").children("img").attr("src", imghov);
+                    $(".menu_fir>li").eq(i).children(".menu_one").children("img").attr("data-img", imgold);
+                }
+
+                if ($(this).parent("li").hasClass("curr")) {
+                    $(this).parent("li").removeClass("curr");
+
+                } else {
+                    $(this).parent("li").addClass("curr").siblings("li").removeClass("curr");
+                }
+                $(this).children("img").attr("src", imghov_url);
+                $(this).children("img").attr("data-img", img_url);
+
+
+                /*判断是否有二级*/
+                if ($(this).next(".menu_child").length != 0) {
+                    if ($(this).next(".menu_child").css("display") == "none") {
+                        $(this).next(".menu_child").slideDown(200);
+                    } else {
+                        $(this).parent("li").removeClass("curr");
+                        $(this).next(".menu_child").slideUp(200);
+                    }
+                }
+            });
+
+
+            $(".sec_one").bind("click", function () {
+                $(".sec_one").removeClass("curr");
+                $(this).addClass("curr");
+            })
+
+            $('#userManage').on('click', function () {
+                $('#iframe').attr('src', 'user-list');
+            });
+            $('#roleManage').on('click', function () {
+                $('#iframe').attr('src', 'role-list');
+            });
+        });
+
+        $('#logout').on('click', function () {
+            $.ajax({
+                type: "POST",
+                url: "/logout",
+                xhrFields: {withCredentials: true},
+                beforeSend: function (xhr) {
+                    var token = $("meta[name='_csrf']").attr("content");
+                    var header = $("meta[name='_csrf_header']").attr("content");
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (msg) {
+                    window.location.href = "/login";
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status + ": " + thrownError);
+                }
+            });
+        });
+
+        changeWH();
+        /*根据窗口更改内容高度*/
+    });
+
+    $(window).resize(function (e) {
+        changeWH();
+    });
+    function changeWH() {
+        var ww = $(window).width();
+        var hh = $(window).height();
+        $(".content").height(hh - $(".header").height());
+        $(".main_iframe").width(ww - $(".menu").width());
+    }
+
+    function linkFrame(surl) {
+        if (surl != null) {
+            $("#main_iframe").attr("src", surl);
+        } else {
+            $("#main_iframe").attr("src", "");
+        }
+
+    }
+</script>
+</body>
+</html>

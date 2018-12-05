@@ -1,0 +1,660 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <!--优先使用 IE 最新版本和 Chrome-->
+    <meta name="renderer" content="webkit">
+    <meta name="_csrf" th:content="${_csrf.token}" content=""/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" content=""/>
+    <meta name="author" content="2016.4.17">
+    <title>集客宝全球旅游分销系统v2.1.0</title>
+    <link rel="stylesheet" type="text/css" href="css/jihe.css">
+    <link rel="stylesheet" type="text/css" href="css/globle.css"/>
+    <link rel="stylesheet" href="css/tools.css"/>
+    <link rel="stylesheet" href="ztree/css/demo.css" type="text/css">
+    <link rel="stylesheet" href="ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <style>
+        .daq-select {
+            margin: 12px 10px auto 0;
+        }
+
+        .page_wrap {
+            margin-top: 12px;
+        }
+
+        .daq-page_select {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+<!--posi S-->
+<div class="posi_box">
+    <span>当前位置：</span><a>首页</a>-<a>角色管理</a>
+</div>
+<!--posi E-->
+<!--content S-->
+<!--<div class="topd_box">-->
+    <!--<div class="oper_box">-->
+        <!--<a id="addRole" class="oper_btn"><img src="images/opa_add.png"/><span>新增</span></a>-->
+        <!--<a id="editRole" class="oper_btn"><img src="images/opa_edit.png"/><span>编辑</span></a>-->
+        <!--<a id="deleteRole" class="oper_btn"><img src="images/opa_dele.png"/><span>删除</span></a>-->
+    <!--</div>-->
+<!--</div>-->
+<div class="topd_box">
+    <div id="operateBox" class="oper_box">
+    </div>
+</div>
+<div class="tbl_out">
+    <div class="tbl_scro">
+        <table id="userTable" class="table_con" border="0" cellpadding="0" cellspacing="0">
+            <thead>
+            <tr>
+                <th class="tbl_chebox">
+                <span class="checkbox_wrap checkbox_box select_all">
+                    <input name="checkboxHead" class="check_init" type="checkbox"><label class="checkbox"></label>
+                </span>
+                </th>
+                <th class="tbl_100"><span>序号</span></th>
+                <th>角色名称</th>
+                <th>角色代码</th>
+            </tr>
+            </thead>
+            <tbody id="roleList">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="page_wrap clearfix">
+        <select id="pidPage" class="page_select niccSelect">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <div class="pages" id="turnPage">
+
+        </div>
+    </div>
+
+</div>
+<!--content E-->
+</body>
+<script type="text/template" id="operateTemp">
+    <div class="oper_box">
+    {{each operate}}
+    {{if $value === 'add'}}<a id="addRole" class="oper_btn"><img src="images/opa_add.png"/><span>新增</span></a>
+    {{else $value === 'edit'}}<a id="editRole" class="oper_btn"><img src="images/opa_edit.png"/><span>编辑</span></a>
+    {{else $value === 'delete'}}<a id="deleteRole" class="oper_btn">
+        <img src="images/opa_dele.png"/><span>删除</span></a>
+    {{/if}}
+    {{/each}}
+    </div>
+</script>
+<script type="text/template" id="roleTemp">
+    {{each roles}}
+    <tr>
+        <td class="tbl_chebox" data-id="${ id }">
+            <span class="checkbox_wrap checkbox_box select_item">
+                <input name="item" class="check_init" type="checkbox">
+                <label class="checkbox" data-id="${ id }"></label>
+            </span>
+        </td>
+        <td>${ $index + 1 }</td>
+        <td>${name || "未知" }</td>
+        <td>${code || "未知" }</td>
+    </tr>
+    {{/each}}
+</script>
+
+<script type="text/template" id="roleInfoTemp">
+    <div id="warp_box" style="width: 850px;">
+        <div class="bg_white" style=" margin-top:20px; padding-bottom:30px;">
+            <div class="tbl_box">
+                <table class="tbl_form" border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                    <tr>
+                        <td class="tbl_tit">
+                            <b class="mark">*</b>
+                            <span>标识：</span>
+                        </td>
+                        <td>
+                            <input class="s_input s_input_fb w318" placeholder="请在这里填写角色标识" type="text"
+                                   name="id" required="true" regexp="false" value="${ roleInfo.code || '' }">
+                            <span class="gray">不超过18个英文字符</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tbl_tit">
+                            <b class="mark">*</b>
+                            <span>名称：</span>
+                        </td>
+                        <td>
+                            <input class="s_input s_input_fb w318" placeholder="请在这里填写角色名称" type="text"
+                                   name="name" required="true" regexp="false" value="${ roleInfo.name || '' }">
+                            <span class="gray">不超过10个中文字符</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tbl_tit">
+                            <b class="mark">*</b>
+                            <span>权限：</span>
+                        </td>
+                        <td id="permissionCheck">
+                            <ul id="permissionTree" class="ztree"></ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.tmpl.min.js"></script>
+<script src="js/tools.js"></script>
+<script src="js/page.js"></script>
+<script src="js/common.js"></script>
+<script src="js/list.js"></script>
+<script src="layer/layer.js"></script>
+<script src="ztree/jquery.ztree.all.min.js"></script>
+<script src="js/menu.js"></script>
+<script>
+    var rows = 10;
+    var name = '', role = '';
+    var permissionTree;
+    var allPermission = [];
+
+    $(function () {
+        renderOperate();
+        //获取权限
+        getPermissions(function () {
+            renderRoleList(1);
+        });
+
+
+        // page_select一页多少条的转变
+        $('#pidPage').change(function () {
+            //每页条数
+            var limits = $(this).val();//这就是selected的值
+            rows = limits;
+
+            renderRoleList(1);
+        });
+
+
+
+        // checkbox 事件
+        checkBox();
+
+
+    });
+
+    function renderRoleList(page) {
+        var $roleList = $('#roleList');
+        $roleList.empty();
+
+        resetHeadCheckBox();
+
+        var loading = tools.loading({
+            selector: '#roleList'
+        });
+
+        tools.executeRequest({
+            method: 'GET',
+            url: 'getRoles',
+            data: {
+                page: page || 1
+                , limit: rows || 10
+//                , role: role || ''
+//                , name: name || ''
+            }
+        }, function (result) {
+            loading.clean();
+            if (!result.code) {
+                if (result.datas && result.datas.length > 0) {
+                    $('.page_wrap').show();
+                    $('#roleTemp').tmpl({
+                        roles: result.datas
+                    }).appendTo($roleList);
+
+                    //绑定数据
+                    $('input[name="item"][type="checkbox"]').each(function (index, item) {
+                        $(item).next().data({roleInfo: result.datas[index]});
+                    });
+
+                    //分页
+                    setOfPageNumber($("#turnPage"), rows, result.page.total, page, "renderRoleList");
+                    /////////tr-td样式hover效果
+                    $roleList.find("tbody > tr:odd").addClass("even");
+                    $roleList.find("tbody > tr:even").addClass("odd");
+                    $roleList.find("tr").on("mouseover mouseout", function () {
+                        $(this).toggleClass(".hover");
+                    });
+                } else {
+                    $('#roleTemp').tmpl({
+                        roles: []
+                    }).appendTo($roleList);
+
+                    $('.page_wrap').hide();
+                    $('#roleList').html('<tr><td colspan="7">' + tools.NO_DATA1 + '</td></tr>');
+                }
+            } else {
+                $('#roleTemp').tmpl({
+                    roles: []
+                }).appendTo($roleList);
+
+                $('.page_wrap').hide();
+                $('#roleList').html('<tr><td colspan="7">' + tools.TRY_REFRESH1 + '</td></tr>');
+            }
+        });
+    }
+
+    function initOperateEvent() {
+        $("#addRole").click(function () {
+            showRoleInfoBox({
+                permissions: allPermission.concat([])
+            });
+        });
+
+        $("#editRole").click(function () {
+            if ($(this).hasClass('disabled')) {
+                return;
+            }
+
+            $("#editRole").addClass("disabled");
+
+            var selects = $('input[checked][name!="checkboxHead"]').length;
+            if (selects === 0) {
+                tools.tip({
+                    message: "请选择一项进行编辑！",
+                    complete: function () {
+                        $("#editRole").removeClass("disabled");
+                    }
+                });
+                return;
+            } else if (selects > 1) {
+                tools.tip({
+                    message: "请只选择一项进行编辑！",
+                    complete: function () {
+                        $("#editRole").removeClass("disabled");
+                    }
+                });
+                return;
+            }
+            $("#editRole").removeClass("disabled");
+
+            //获取角色信息
+            var roleInfo = $("#userTable .checkbox.active").data("roleInfo");
+
+            showRoleInfoBox({
+                permissions: allPermission.concat([]),
+                roleInfo: roleInfo
+            });
+        });
+        //删除角色
+        $('#deleteRole').click(function () {
+            if ($(this).hasClass('disabled')) {
+                return;
+            }
+
+            $("#deleteRole").addClass("disabled");
+
+            var selects = $('input[checked][name!="checkboxHead"]').length;
+            if (selects === 0) {
+                tools.tip({
+                    message: "请选择至少一项进行删除！",
+                    complete: function () {
+                        $("#deleteRole").removeClass("disabled");
+                    }
+                });
+            } else {
+                tools.confirm({
+                    count: selects,
+                    sure: function () {
+                        var $selectedUsers = $("#userTable .checkbox.active");
+                        var ids = [];
+
+                        $selectedUsers.each(function (index, item) {
+                            ids.push($(item).attr('data-id'));
+                        });
+                        var data = "";
+                        for(var id in ids){
+                            data+=ids[id]+"-";
+                        }
+                        data = data.substr(0,data.length-1);
+                        tools.executeRequest({
+                            method: 'DELETE',
+                            url: '/role/'+data
+//                            ,
+//                            data: {
+//                                id: ids.join(',')
+//                            }
+                        }, function (result) {
+                            if (!result.code) {
+                                tools.tip({
+                                    message: "删除角色成功！",
+                                    time: 1000,
+                                    complete: function () {
+                                        $("#deleteRole").removeClass("disabled");
+                                        window.location.href = 'role-list';
+                                    }
+                                });
+                            } else {
+                                tools.tip({
+                                    message: result.message,
+                                    complete: function () {
+                                        $("#deleteRole").removeClass("disabled");
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    cancel: function () {
+                        $("#deleteRole").removeClass("disabled");
+                    }
+                })
+            }
+        });
+    }
+
+    function showRoleInfoBox(option) {
+        var isEdit = option.roleInfo ? true : false;
+        layer.open({
+            type: 1,
+            title: isEdit ? "编辑角色" : "添加角色",
+            skin: isEdit ? 'lay_tips_fk' : 'lay_tips_tj', //样式类名
+            closeBtn: 1, //显示关闭按钮
+            shift: 0,
+            zIndex: 99,
+            btn: ['保存', '取消'],
+            yes: function (index, layero) {
+                var $saveBtn = $(layero).find('.layui-layer-btn').children();
+                if ($saveBtn.hasClass('disabled')) {
+                    return;
+                }
+
+                $saveBtn.addClass('disabled');
+
+                var roleInfo = getRoleInfo($saveBtn);
+                if (!roleInfo) {
+                    return;
+                }
+
+                if (!isEdit) {
+                    tools.executeRequest({
+                        method: 'POST',
+                        url: '/role',
+                        data: roleInfo
+                    }, function (result) {
+
+                        if (!result.code) {
+                            tools.tip({
+                                message: "添加角色成功！",
+                                time: 2000,
+                                complete: function () {
+                                    layer.close(index);//关闭弹出
+                                    //window.location.reload();
+                                    renderRoleList(1);
+                                }
+                            });
+                        } else {
+                            tools.tip({
+                                message: "添加角色失败:" + result.message,
+                                complete: function () {
+                                    $saveBtn.removeClass('disabled');
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    tools.executeRequest({
+                        method: 'PUT',
+                        url: '/role/' + roleInfo.code,
+                        data: roleInfo
+                    }, function (result) {
+                        if (!result.code) {
+                            tools.tip({
+                                message: "更新角色信息成功！",
+                                time: 1000,
+                                complete: function () {
+                                    layer.close(index);//关闭弹出
+                                    //window.location.reload();
+                                    renderRoleList(1);
+                                }
+                            });
+                        } else {
+                            tools.tip({
+                                message: "更新角色信息失败！",
+                                complete: function () {
+                                    $saveBtn.removeClass('disabled');
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+            ,
+            area: ['700px', '500x'],
+            shadeClose: true, //开启遮罩关闭
+            content: $('#roleInfoTemp').tmpl({roleInfo: option.roleInfo || {}}).html()
+        });
+
+        tools.onBlurCheck({
+            selector: 'input[name="id"]',
+            type: 'account'
+        });
+        tools.onBlurCheck({
+            selector: 'input[name="name"]',
+            type: 'userName'
+        });
+
+        var setting = {
+            view: {
+                showIcon: function (treeId, treeNode) {
+                    return false;
+                }
+            },
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    rootPId: 0,
+                    idKey: "id",
+                    pIdKey: 'pId'
+                }
+            }
+        };
+
+        if (isEdit) {
+            for (var j = 0; j < option.permissions.length; j++) {
+                    option.permissions[j].checked = false;
+            }
+            for (var i = 0; i < option.roleInfo.permissions.length; i++) {
+                for (var j = 0; j < option.permissions.length; j++) {
+                    if (option.roleInfo.permissions[i] === option.permissions[j].id) {
+                        option.permissions[j].checked = true;
+                    }
+                }
+            }
+        }
+
+        permissionTree = $.fn.zTree.init($('#permissionTree'), setting, option.permissions);
+    }
+
+    function getPermissions(next) {
+        tools.executeRequest({
+            method: "GET",
+            url: "/resourceTree"
+        }, function (result) {
+            $("#editRole").removeClass("disabled");
+//        var result = {
+//            code: 0,
+//            datas: [//后台返回的可以不是这个结构，但是获取到数据后需要转换为这样的格式
+//                {
+//                    id: 1, //权限id
+//                    pId: 0,//父级，0表示root
+//                    name: '用户管理',
+//                    isParent: true
+//                }, {
+//                    id: 12,
+//                    pId: 1,
+//                    name: 'delete',
+//                    isParent: false
+//                }, {
+//                    id: 13,
+//                    pId: 1,
+//                    name: 'edit',
+//                    isParent: false
+//                }, {
+//                    id: 14,
+//                    pId: 1,
+//                    name: 'search',
+//                    isParent: false
+//                }, {
+//                    id: 15,
+//                    pId: 1,
+//                    name: 'add',
+//                    isParent: false
+//                }, {
+//                    id: 2,
+//                    pId: 0,
+//                    name: '角色管理',
+//                    isParent: true
+//                }, {
+//                    id: 22,
+//                    pId: 2,
+//                    name: 'delete',
+//                    isParent: false
+//                }, {
+//                    id: 23,
+//                    pId: 2,
+//                    name: 'edit',
+//                    isParent: false
+//                }, {
+//                    id: 24,
+//                    pId: 2,
+//                    name: 'search',
+//                    isParent: false
+//                }, {
+//                    id: 25,
+//                    pId: 2,
+//                    name: 'add',
+//                    isParent: false
+//                }, {
+//                    id: 3,
+//                    pId: 2,
+//                    name: '特殊',
+//                    isParent: true
+//                }, {
+//                    id: 31,
+//                    pId: 3,
+//                    name: 'qq',
+//                    isParent: false
+//                },
+//                {
+//                    id: 32,
+//                    pId: 3,
+//                    name: 'ww',
+//                    isParent: false
+//                }
+//            ]
+//        }
+            if (!result.code) {
+                if (result.datas && result.datas.length > 0) {
+                    allPermission = result.datas;
+                    for (var i = 0; i < allPermission.length; i++) {
+                        if (allPermission[i].isParent) {
+                            allPermission[i].open = true; //如果是父级，默认展开
+                        }
+                    }
+
+                    if (next && typeof next === 'function') {
+                        next(allPermission);
+                    }
+                } else {
+                    alert("无数据");//
+                }
+            } else {
+                alert("错误");//
+            }
+        })
+    }
+
+    function renderOperate() {
+        var id = project.getMenuIdByName(project.menu, '角色管理');
+        tools.executeRequest({
+            method: 'GET',
+            url: '/user/resources?menu=' + id,
+        }, function (result) {
+//        var result = {
+//            code: 0,
+//            datas: ['add', 'delete', 'edit']
+//        };
+            $('#operateTemp').tmpl({operate: result.datas}).appendTo('#operateBox');
+            initOperateEvent();
+        });
+
+    }
+
+    //重置表头的checkbox
+    function resetHeadCheckBox() {
+        $('input[name="checkboxHead"]').attr('checked', '').next().removeClass('active');
+    }
+
+    //获取表单中的角色信息
+    function getRoleInfo($saveBtn) {
+        var roleInfo = {};
+        roleInfo.code = $('input[name="id"]').val() || '';
+        if (roleInfo.code === $('input[name="id"]').attr('placeholder')) {
+            roleInfo.code = '';
+        }
+
+        roleInfo.name = $('input[name="name"]').val() || '';
+        if (roleInfo.name === $('input[name="name"]').attr('placeholder')) {
+            roleInfo.name = '';
+        }
+
+        roleInfo.permissions = [];
+        var permissions = permissionTree.getCheckedNodes();
+        for (var i = 0; i < permissions.length; i++) {
+            //TODO 非父类节点
+//            if (!permissions[i].isParent) {//只获取非父类节点
+            roleInfo.permissions.push(permissions[i].id);
+//            }
+        }
+
+        if (!tools.contentCheck(roleInfo.code, tools.TYPES['account']).pass) {
+            tools.tip({
+                message: "请填写角色标识，不超过18个英文字符！",
+                complete: function () {
+                    $saveBtn.removeClass('disabled');
+                }
+            });
+            return;
+        } else if (!roleInfo.name || tools.strLength(roleInfo.name) > 20) {
+            tools.tip({
+                message: "请输入角色名称，且不超过20个字符！",
+                complete: function () {
+                    $saveBtn.removeClass('disabled');
+                }
+            });
+            return;
+        } else if (roleInfo.permissions.length === 0) {
+            tools.tip({
+                message: "请选择角色权限",
+                complete: function () {
+                    $saveBtn.removeClass('disabled');
+                }
+            });
+            return;
+        }
+
+        return roleInfo;
+    }
+</script>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.shoper.web.mapper.UserMapper">
+    <!--<resultMap id="sys_role" type="org.shoper.web.pojo.Role">-->
+    <!--<id column="rid" property="id"/>-->
+    <!--<result column="rname" property="name"/>-->
+    <!--<association property="user" javaType="org.shoper.web.pojo.User">-->
+    <!--<id column="id" property="id"/>-->
+    <!--<result column="username" property="userName"/>-->
+    <!--<result column="email" property="email"/>-->
+    <!--<result column="password" property="password"/>-->
+    <!--<result column="dob" property="dob"/>-->
+    <!--</association>-->
+    <!--</resultMap>-->
+    <resultMap id="user" type="org.shoper.web.pojo.User">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="username" property="userName"/>
+        <result column="email" property="email"/>
+        <result column="enabled" property="enabled"/>
+        <result column="err_count" property="errCount"/>
+        <result column="dob" property="dob"/>
+    </resultMap>
+    <select id="getUserByUserName" resultType="org.shoper.web.pojo.User" parameterType="string">
+        SELECT
+        *
+        FROM
+        sys_user
+        <where>
+            username = #{username}
+        </where>
+    </select>
+    <!--<select id="findRoleByUserId" resultMap="sys_role" parameterType="java.lang.Integer">-->
+    <!--SELECT-->
+    <!--r.id AS rid,-->
+    <!--u.id AS uid,-->
+    <!--r. NAME AS rname,-->
+    <!--u. username AS username,-->
+    <!--u.password as password,-->
+    <!--u.email as email,-->
+    <!--u.dob as dob-->
+    <!--FROM-->
+    <!--sys_role AS r-->
+    <!--INNER JOIN sys_user AS u ON (r.user_id = u.id)-->
+    <!--WHERE-->
+    <!--r.user_id = #{userId};-->
+    <!--</select>-->
+    <select id="findRoleByUserId" resultType="org.shoper.web.pojo.Role" parameterType="java.lang.Integer">
+            SELECT
+            r.code,
+            r.`name`,
+            r.id
+            FROM
+            sys_user_role sur
+            INNER JOIN sys_user u ON (u.id = sur.uid)
+            INNER JOIN sys_role r ON (r.id = sur.rid)
+            WHERE u.id = #{id}
+    </select>
+
+
+    <select id="getUsers" resultMap="user">
+        SELECT
+            id
+            ,NAME
+            ,username
+            ,err_count
+            ,email
+            ,dob
+        FROM
+            sys_user
+        LIMIT #{offset},
+         ${limit}
+    </select>
+    <select id="getUserById" resultMap="user">
+        SELECT * from sys_user where id = #{0}
+    </select>
+    <select id="getUserSize" resultType="java.lang.Integer">
+        SELECT
+        count(0)
+        FROM
+        sys_user
+    </select>
+    <insert id="addUser" parameterType="org.shoper.web.pojo.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_user (
+            username,
+            password,
+            email,
+            NAME,
+            dob
+        )
+        VALUES (#{userName},#{password},#{email},#{name},now());
+    </insert>
+    <insert id="bindRoles">
+        INSERT INTO sys_user_role
+        (uid, rid)
+          VALUES
+            (#{uid},#{rid});
+    </insert>
+    <delete id="unbindRoles">
+        delete from sys_user_role
+        where uid = #{uid} and rid = #{rid}
+    </delete>
+    <update id="modifyUserById">
+        UPDATE sys_user
+        SET NAME = #{name},
+         email = #{email}
+        WHERE
+            id = #{id}
+    </update>
+    <delete id="remove">
+        DELETE  FROM  sys_user where id = #{0}
+    </delete>
+
+</mapper>
